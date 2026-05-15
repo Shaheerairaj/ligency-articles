@@ -1,150 +1,145 @@
 # Article Outline: A Practical Guide to Andrej Karpathy's AutoResearch
 
-**Working Title:** The Machine That Outran Its Creator  
+**Working Title:** AutoResearch by the Line: A Code-First Walkthrough of Karpathy's Overnight Loop
 **Brief:** [Notion](https://www.notion.so/35a1b721b66d813e962ee55a70b4033a)  
 **Word Count:** 2,500–4,000 words  
 **Target Audience:** Advanced AI engineers / Engineering managers  
 **Deadline:** 2026-05-21  
 **Research:** [/research/INDEX.md](./research/INDEX.md)
 
----
 
-## Throughline
+## Working Title options
 
-Most of ML research is search, not creativity. Agents are better at search than humans. The only thing left that's irreducibly human is knowing what to search for.
-
----
-
-## Section 1 — Open With the Punchline (~200 words)
-
-**Don't explain AutoResearch. Start with the finding.**
-
-Karpathy had been refining the same training code for two decades. He handed it to an agent for two days. The agent found something he'd missed — weight decay on value embeddings, an optimizer parameter he'd tuned by hand and gotten wrong. The agent fixed it.
-
-No setup. No explanation yet. Just: the machine beat the expert at the expert's own game.
-
-**Goal:** Force the reader to ask "how?" before explaining anything. Earn attention instead of assuming it.
+1. Karpathy's AutoResearch, Read From The Repo
+2. Three Files, One GPU, One Night: Inside Karpathy's AutoResearch
+3. AutoResearch by the Line: A Code-First Walkthrough of Karpathy's Overnight Loop
 
 ---
 
-## Section 2 — What Kind of Problem Is ML Research, Really? (~300 words)
+## Section 1 — Introduction
 
-**Reframe the field before introducing the tool.**
+The `autoresearch` repo is small enough to read cover to cover in an afternoon. About 1,100 lines of Python and Markdown across three files. Karpathy pushed it in March 2026. The repo collected 21,000 stars that weekend and spawned forks for MLX, Windows RTX, and AMD inside ten days.
 
-- Most ML research isn't creative — it's search: hypothesis → implement → measure → keep or discard → repeat
-- Creativity lives only at the edges: picking the direction, knowing when a result is interesting
-- AutoResearch didn't discover anything new about AI — it discovered something uncomfortable about research: most of the work is mechanical, and we've been doing it by hand
-- Name the real claim of the article before the reader knows it's the claim
+The idea is pretty cool. Point a coding agent at the repo. Leave it overnight. Return to ~100 training experiments and a model a bit better on the last set than the one you went to sleep with.
 
----
+The WAY this is done is the interesting part. The agent edits `train.py` and only `train.py`. The human edits `program.md` between runs. The third file, `prepare.py`, is locked for both parties. A single number, `val_bpb`, decides which experiments are actually determined a success.
 
-## Section 3 — The Recipe (Not the Tool) (~350 words)
+[FIGURE 1: The three-file contract. Human writes program.md. Agent writes train.py. prepare.py stays locked. All three feed into val_bpb, the single score that decides what survives.]
 
-**Introduce AutoResearch as a pattern, not a product.**
+That single number is the whole reason the loop works. Without it, the agent has no way to tell if its last edit made the model better or worse, and the overnight session turns into a long list of half-finished ideas. With it, the loop becomes a one-way ratchet. The word is borrowed from mechanics: a ratchet is the part inside a socket wrench that lets the handle turn one way and locks against turning back. Same idea here, implemented in git. Every edit becomes a `git commit`. If val_bpb drops, that commit stays on the branch and the next experiment starts from it. If it doesn't, the agent runs `git reset HEAD~1`, which deletes the commit and puts `train.py` back to exactly what it was before the edit. The branch only ever grows with commits that lowered the score. The result is about 12 experiments per hour on an H100, ~100 per night, ~700 over a long weekend.
 
-- Karpathy's own words: *"You don't use it directly, it's just a recipe/idea."*
-- The nanochat origin: why starting from a Chinchilla-validated, proven training setup matters (the ratchet is only meaningful if the baseline is solid)
-- Introduce the three-file contract as a **philosophy of constraints**, not an architecture:
-  - `prepare.py` — locks the metric so you can't cheat the yardstick
-  - `program.md` — locks the direction so the human stays in the loop on what matters
-  - `train.py` — frees the implementation; everything else is the agent's problem
-- The constraints aren't limitations — they're what make the system work
+Don't worry if you didn't understand all of that, we will dive into each one of these concepts in detail.
 
----
+## Section 2 — What AutoResearch actually is
 
-## Section 4 — The Ratchet (~450 words)
+AutoResearch is basically a recipe that Karpathy came up with to automate machine learning experimentation using coding agents/LLMs.
 
-**Explain the mechanism as a story, not a list.**
+The repo is three files. Two of them are quick to describe:
 
-- Tell it narratively: the agent wakes up, reads its own history, makes a bet, runs the clock, commits or erases, repeats — 700 times
-- Two design decisions that deserve more attention than they usually get:
-  - **Why git?** The commit history isn't just version control — it's the agent's long-term memory. Each commit is a data point. The agent reads its own history to know what direction to push next.
-  - **Why exactly 5 minutes?** It puts speed improvements and convergence improvements on equal footing — a change that trains 20% faster gets the same shot as one that finds lower loss. The time window is the equalizer.
-- `val_bpb` explained: why bits-per-byte and not raw loss (vocabulary-size-independent → fair across architectural changes)
-- `results.tsv` as the agent's working memory — how early runs (broad exploration) differ from late runs (narrow refinement)
+- **`prepare.py`** — immutable, the agent cannot touch it. 389 lines that handle the data, the tokenizer, and the scoring function. This is what makes results comparable across every run.
+- **`train.py`** — the agent's sandbox. 630 lines containing the model, the optimizer, and the five-minute training loop. Architecture, hyperparameters, optimizer choice, batch size, sequence length: all fair game.
 
----
+The third one, `program.md`, is what the human uses as a lever in this whole engagement. 114 lines of Markdown that lay out the experiment loop, the TSV schema, the "simpler is better" rule, and the NEVER STOP directive. The actual loop the agent reads is on lines 94-104:
 
-## Section 5 — What It Actually Found — and Why It's Surprising (~400 words)
+```
+LOOP FOREVER:
+1. Look at the git state: the current branch/commit we're on
+2. Tune `train.py` with an experimental idea by directly hacking the code.
+3. git commit
+4. Run the experiment: `uv run train.py > run.log 2>&1`
+5. Read out the results: `grep "^val_bpb:\|^peak_vram_mb:" run.log`
+6. If the grep output is empty, the run crashed. [...]
+7. Record the results in the tsv
+8. If val_bpb improved (lower), you "advance" the branch, keeping the git commit
+9. If val_bpb is equal or worse, you git reset back to where you started
+```
 
-**The credibility section. Be specific.**
+The human iterates and modifies `program.md`. The agent iterates and modifies `train.py`. In practice the loop reduces to five steps the agent does over and over again: edit `train.py`, `git commit`, run `uv run train.py > run.log 2>&1`, grep `val_bpb`, ratchet forward or `git reset HEAD~1`.
 
-- Not "it found improvements" — walk through the actual findings: QKNorm reordering, value embedding regularization, banded attention tuning
-- These are structural code changes, not hyperparameter tweaks — the kind a human researcher would write a paper about
-- The sharpest point: the agent found the weight decay mistake on value embeddings — code Karpathy had optimized by hand, looked at hundreds of times
-- The agent didn't know it was supposed to be hard. It just measured.
-- The result: depth-12 improvements transferred to depth-24 → time-to-GPT-2 cut from 2.02h → 1.80h (11% speedup)
-- Uncomfortable implication: expertise creates blind spots. The agent had none.
+One might ask at this point how this is different to AutoML or NAS which are frameworks to also help automate ML training and experimentation. The short answer is bounded search. AutoML and NAS only search a predefined hyperparameter or architecture space; the space is fixed in advance and no code gets written. AlphaEvolve (Google DeepMind's 2025 system that evolves programs with an LLM in the loop) does write code. It asks the LLM for edits, scores each one against a target metric, and carries the best forward as the seed for the next round. The catch is that its search runs a parallel population against multiple objectives, not a single linear ratchet on one number. A generic coding agent session writes code freely, but has no grader. Nothing accumulates between turns.
 
----
+AutoResearch is what you get when all three of those properties hold at once: the agent writes code, an immutable scorer (prepare.py) grades every change, and one strict metric decides what survives. The README quotes ~12 experiments per hour on an H100, ~100 per night. Karpathy's published two-day run logged ~700 experiments, retained ~20 changes, and cut training time on the depth-24 nanochat model (a long running project of his) by 11%.
 
-## Section 6 — Here's Where It Breaks (~400 words)
+## Section 3 — Why val_bpb specifically
 
-**Don't bury the limitations. Lead with them.**
+val_bpb is the average number of bits the model needs to predict each byte of held-out text; lower means the model is a stronger predictor. It is a close cousin of perplexity and cross-entropy (the two most common ways to score a language model on a validation set during training) with one specific property that makes it the right score for an autonomous agent to optimize against. The number for this metric is computed in `prepare.py` in a six-line function called `evaluate_bpb`:
 
-- Open strong: AutoResearch cannot take a step backward — no sacrificing today's val_bpb for a larger gain tomorrow. Every human researcher does this constantly. The agent cannot.
-- The local search trap: agents cycle through minor variations of whatever worked last (GitHub Issue #22)
-- The RLHF problem: the agent is "cagy and scared" — trained to be safe and conservative, it avoids the bold experiments that might fail spectacularly but teach you something
-- The 5-minute blindness: improvements that only show up over longer runs are invisible
-- The hardest limitation: **writing a good `program.md` requires having done the research yourself.** Fast iteration toward the wrong direction is just fast failure.
-- This section is where you earn the trust of an advanced reader.
+```python
+def evaluate_bpb(model, tokenizer, batch_size):
+    token_bytes = get_token_bytes(device="cuda")
+    val_loader = make_dataloader(tokenizer, batch_size, MAX_SEQ_LEN, "val")
+    steps = EVAL_TOKENS // (batch_size * MAX_SEQ_LEN)
+    total_nats = 0.0
+    total_bytes = 0
+    for _ in range(steps):
+        x, y, _ = next(val_loader)
+        loss_flat = model(x, y, reduction='none').view(-1)
+        y_flat = y.view(-1)
+        nbytes = token_bytes[y_flat]
+        mask = nbytes > 0
+        total_nats += (loss_flat * mask).sum().item()
+        total_bytes += nbytes.sum().item()
+    return total_nats / (math.log(2) * total_bytes)
+```
 
----
+The function walks through the held-out validation set, asks the model "how surprised were you by this token?" for every token, and converts that surprise into bits.
 
-## Section 7 — It Was Never Really About ML (~350 words)
+Cross-entropy comes out in a unit called nats by default. Nats are just the natural-log version of bits, and dividing by ln(2) is how you convert one into the other (that is what `math.log(2)` is doing in the last line). The function then throws away special tokens, the ones whose byte length is zero, which is what the `mask` line is doing. The final return value divides total bits by total bytes of text. That ratio is what gets reported as val_bpb.
 
-**The pivot. The boldest structural move.**
+The reason for bytes specifically is that every other obvious choice can be gamed by the agent. Perplexity and raw cross-entropy both report information per token, and "token" is whatever the current tokenizer says it is so that isn't right. Shrink the vocab and tokens get longer; per-token loss rises even when the model's actual predictive quality is identical. Increase the vocab and the same metric falls without any real improvement.
 
-- Introduce Shopify not as a footnote but as the central reveal
-- Shopify applied the three-file ratchet to CI build optimization: 65% faster builds, 300x faster unit tests, 53% faster render times — no model training involved
-- The point: AutoResearch accidentally invented a general-purpose engineering pattern
-- Any domain with fast feedback and a scoreable objective is a candidate: search ranking, fraud scoring, compiler optimization, intent classification
-- Restate the three-file contract as a general principle: **lock the metric, define the direction, free the implementation**
-- This isn't about LLMs. It's about the shape of problems that agents can solve.
+Bits per byte anchors the score to the raw UTF-8 text, which stays the same no matter how the model eventually spits out that metric. The agent can rewrite the tokenizer, halve the model width, double the steps inside the 300-second budget, and the score still means what it meant before, because the denominator is the validation text itself. That property is what makes val_bpb safe to hand to an autonomous agent.
 
----
+The general lesson for anyone trying to copy the pattern: the agent is allowed to rewrite the thing being measured, so the units of your metric have to be anchored to something the agent cannot edit. If the agent can move the score just by changing the code (rather than by making the code actually better), the ratchet is broken. With val_bpb, the agent can swap the tokenizer or rewrite the model, but it cannot change the raw bytes of the validation text in the denominator. That fixed reference point is what keeps every run comparable against each other.
 
-## Section 8 — What This Means for You (~300 words)
+Shopify is the obvious case in point. Tobi Lütke (Shopify's CEO) contributed 32 commits to fork the repo into pi-autoresearch, and Shopify Engineering has since pointed the same ratchet at non-ML problems: CI build speed (65% faster), Liquid rendering (53% faster), and unit-test runtime (300x faster). The equivalent of val_bpb in those domains is whatever score the agent's edits cannot quietly corrupt. Deciding that metric is the trickiest part of trying to apply AutoResearch to use cases where the metrics might not be as quantitative.
 
-**Address the engineering manager directly.**
+## Section 4 — Prompt engineering inside program.md
 
-- The shift from writing code to directing agents is already happening — AutoResearch is the most concrete version of it: a human writes 50 words of markdown, an agent writes 700 experiments worth of code
-- The question for engineering managers isn't whether this pattern applies to their work — it's whether their teams know enough to write the `program.md`
-- The agents can search. Only humans can decide what's worth finding.
-- Karpathy's SETI@home vision: swarms of agents as a research community running asynchronously
-- End on the warning Karpathy himself gave: if the next generation of engineers skips formative research work because agents handle it now, the field will have plenty of compute and no one to point it in the right direction. **The ratchet only moves in one direction. Make sure you know which direction that is.**
+- Walk through the six directives that actually carry the loop: LOOP FOREVER (lines 94-104), simplicity criterion (line 37), NEVER STOP (line 112), redirect to run.log (line 99), TSV schema (lines 70-72), "edit train.py only" [CODE: program.md excerpts at each line range]
+- For each directive, the specific failure mode if you remove it (drop simplicity → complexity stacks for fractional gains; drop NEVER STOP → agent pauses, human is asleep)
+- Karpathy's own framing on why the prompt is intentionally minimal and "the human is the bottleneck" [QUOTE: interview/tweet source + citation]
+- One before/after where a one-line program.md edit visibly changed agent behavior across a run [CODE: program.md diff + matching results.tsv rows]
 
----
+## Section 5 — Code walkthrough of train.py
 
-## Section 9 — Getting Started (~150 words)
+- The architecture skeleton: GPTConfig defaults (depth-12, 768 dim, 6 heads, 32K vocab) and the three building blocks (CausalSelfAttention, MLP, Block) [CODE: train.py:33-50 GPTConfig + class hierarchy]
+- The Muon+AdamW split — 2D matrix params routed through Muon (with NorMuon variance reduction), everything else through fused AdamW [CODE: train.py:356 MuonAdamW class]
+- The hyperparameters the agent edits most often (TOTAL_BATCH_SIZE, MATRIX_LR, EMBEDDING_LR, UNEMBEDDING_LR, WEIGHT_DECAY) and the 300-second TIME_BUDGET that caps every run [CODE: train.py:438-443]
+- The three buckets of surviving edits (shape, optimizer, small architectural tweaks) with one real kept commit per bucket [CODE: three git diffs from Karpathy's run]
 
-Short and practical:
-- Prerequisites: NVIDIA GPU (20+ GB VRAM), Python 3.10+, `uv`, a coding agent (Claude Code, Cursor)
-- Setup in 4 lines:
-  ```bash
-  git clone https://github.com/karpathy/autoresearch.git
-  cd autoresearch
-  uv sync
-  uv run prepare.py
-  ```
-- Open your agent, point it at `program.md`, walk away
-- The one real piece of advice: **spend more time on `program.md` than you think you need to.** That file is the only thing between the agent and the wrong direction.
-- For smaller hardware: TinyStories dataset, depth 4, vocab 256
+## Section 6 — Git mechanics of the ratchet
 
----
+- The two-command selection mechanism: `git commit` to propose, `git reset HEAD~1` to discard on no improvement [CODE: real `git log --oneline` excerpt from an autoresearch branch]
+- Branch naming convention (`autoresearch/<tag>`) and why results.tsv is deliberately untracked (program.md line 102) — otherwise reset would erase the agent's memory
+- Two parallel logs working in tandem: branch commits = winners only, TSV = every attempt including crashes [DIAGRAM: branch timeline + matching TSV rows side-by-side]
+- How crashes are recorded (`val_bpb=0.000000`, status `crash`) so dead-ends inform the agent without being re-tried [CODE: TSV excerpt showing crash row]
 
-## Section 10 — Key Takeaways / TL;DR
+## Section 7 — The agent's decision loop in detail
 
-5–6 bullets. Required by brief. Write them to be genuinely useful, not SEO padding.
+- What the agent reads at iteration start: program.md (114 lines), current train.py (630 lines), results.tsv (one row per past experiment), cached prepare.py + README — roughly 15-25k tokens of grounding [DIAGRAM: stacked-bar context budget breakdown]
+- Per-cycle additions are deliberately cheap: one diff, a 5-minute wait, a 4-line grep of run.log, one new TSV row
+- The redirect rule (`> run.log 2>&1`) as the token firewall — a streamed training run would dump ~50k tokens per experiment into the context
+- The real overnight bill: H100 rental ($16-24 for 8 hrs at ~$2-3/hr) is larger than the Sonnet API spend (tens of dollars) [DIAGRAM: cost stacked bar, GPU vs API]
 
----
+## Section 8 — Reproducing a run end-to-end
 
-## Section 11 — FAQ
+- The two-command setup: `uv run prepare.py` once to build dataset + tokenizer cache, then `claude` from inside the repo with program.md as the opening message [CODE: terminal session transcript]
+- Baseline numbers to expect on first run: ~5 minutes, val_bpb ≈ 0.997 on a fresh H100 (matches program.md's own example output)
+- The staircase shape of Karpathy's published run: steep first hour of easy wins, long flat overnight, occasional late jumps from stitched-together near-misses [DIAGRAM: val_bpb vs experiment number staircase chart]
+- Karpathy's headline numbers: ~700 experiments across two days, ~20 retained, 11% training-time cut on nanochat depth-24 [CODE: results.tsv excerpt showing kept rows]
 
-5–6 questions targeting search/GEO. Required by brief. Suggested questions:
-- Is AutoResearch the same as AutoML?
-- Do I need an H100 to use it?
-- Can I apply AutoResearch outside of ML?
-- Which coding agent works best?
-- How do I write a good `program.md`?
-- What's the difference between AutoResearch and AlphaEvolve?
+## Section 9 — Comparison with code, not prose
+
+- Side-by-side pseudocode of the two loops on one page [CODE: AutoResearch linear ratchet + AlphaEvolve population evolution, ~10 lines each]
+- The four differences that matter: population size (1 vs N), metric (single number vs multi-objective tuple), selection (git reset vs diversity-preserving prune), infrastructure (~1.1K LOC harness vs coordinated cluster services)
+- The decision rule for picking between them: one metric + one GPU → AutoResearch; multi-objective + a fleet → AlphaEvolve
+- They are not competing tools — they target different problem shapes, and saying so honestly is more useful than ranking them [DIAGRAM: 2x2 matrix of metric count vs compute footprint]
+
+## Section 10 — The creativity ceiling, mechanistically
+
+- What the ceiling looks like in practice: the agent proposes in-distribution variants (LR sweeps, attention pattern tweaks) but never genuinely novel architectures — no Mamba, no state-space mixing, no replacement of softmax attention
+- Two mechanistic hypotheses for why: RLHF penalizes "let me try something weird" during preference learning, and the simplicity criterion in program.md reinforces the same bias against radical changes
+- A possible fix: a parallel exploration branch that runs without the simplicity rule and feeds back into main only when a clear winner emerges [DIAGRAM: two-branch loop, main ratchet + exploration ratchet]
+- None of the three published forks (MLX, AMD, Windows RTX) have tried it — concrete weekend project for a reader who wants to push past the ceiling
+
