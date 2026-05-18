@@ -146,3 +146,50 @@ The thing worth holding onto from this section is what the agent is NOT doing. I
 There's a catch here though. What looks simple from the outside is only simple because Karpathy has decades of experience with this exact problem and has done the grunt work to make the loop possible in the first place. He has trained these small LLM setups by hand hundreds of times, written the code from scratch every time, and he knows where the failure modes are, which is why prepare.py looks the way it does and why program.md says what it says. He knows what's reasonable for the agent to touch and what isn't, which is why train.py is shaped the way it is. The agent does not have to figure out any of this, it walks into a kitchen where someone has already laid out the tools, marked the safe areas, and written down what good looks like. Without that scaffolding, the same agent pointed at a different repo would not get anywhere useful. The right recipe assumes the kitchen has already been built.
 
 That this kind of bounded, scaffolded loop is still enough to find improvements a human missed for twenty years is what makes the whole thing interesting, and we'll come back to what that means in the next section.
+
+## 6. Where it works, where it stalls
+
+Last section closed with the twenty-year point. Karpathy's loop, run overnight, surfaced something he had missed across decades of refining the same training setup, specifically that he wasn't applying weight decay to the value embeddings. That kind of small, mechanical fix is exactly what the ratchet is good at. The question for this section is what other kinds of changes it finds, and what kinds it never will. That's the call you need to make if you're deciding whether to wire this into your own work.
+
+What it reliably finds is the same shape of thing as the weight decay change. One-line edits, no architectural risk, the kind of thing a researcher writes once, ships, and then never goes back to look at again because there are a hundred other knobs to turn. The ratchet doesn't move on to the next knob. It sits on the same knob and tries every reasonable value, then the next adjacent knob, then the next. It's good at this. Optimizer parameters that drifted out of tune over the years, init schemes that were chosen before the network depth changed, learning rate schedules that were copy-pasted from a different paper, all of these get noticed because the loop has time to actually check them and the human doesn't.
+
+What it doesn't find is anything that requires going backwards before going forwards. Anything that needs the model to get worse for a few iterations before the bigger payoff lands. Anything that's outside the local neighborhood of the existing train.py. GitHub Issue #22 on the repo describes this directly, the agents "cycle through minor variations of whatever worked last, stuck in a local search pattern." Once the loop has found a good neighborhood it stays there.
+
+Why does this happen, and is it the model's fault or the framework's. My take is that it's both, and you have to be honest about both contributions or you'll spend a weekend trying to fix the wrong one.
+
+The model contribution is RLHF, specifically the reward shaping that makes Claude (and GPT, and the rest) friendly and helpful and safe. Karpathy himself talked about this on Hacker News, the agents on open-ended problems come across as "cagy and scared," which is exactly the wrong personality for a creative search task. An agent that's been trained to produce safe, conservative outputs is going to keep proposing safe, conservative experiments, things like tweaking a number, adding weight decay, or switching the activation function, rather than something like "rewrite the attention mechanism from scratch as something that doesn't exist in the literature yet." Even if the model could write that code, it has been gently trained out of suggesting it.
+
+The framework contribution is the ratchet. The rule is simple, every change has to immediately improve val_bpb or it gets reset out. A change that would have improved the metric in the long run, but first made it worse for a few iterations, cannot survive `git reset HEAD~1`. The loop has no concept of "I'll allow this to be worse for two iterations and see what happens." It's strict. That strictness is also what makes the loop reliable, you can't get both. You either trust monotonic improvement as the signal and lose the ability to explore valleys, or you allow exploration and lose the guarantee that things are getting better.
+
+If you put the two together, what you have is an agent that wouldn't propose a wild change anyway, running inside a framework that wouldn't accept one if it did. Belt and suspenders for incremental progress. Which is fine, as long as you know that's what you're buying.
+
+Now how does this compare to the older tools and to the more recent ones, mechanically rather than as marketing categories. AutoML and NAS (neural architecture search) are basically blind search. AutoML picks hyperparameters by random sampling or evolutionary algorithms, no memory of why a previous try failed, no ability to read your code, just a budget and a search space you defined ahead of time. NAS does the same thing but for architecture choices, usually with a lot more compute thrown at it. Both can find things AutoResearch can't because they're not biased the way an LLM is toward small, safe-looking suggestions. They can also find things AutoResearch can find, but they'll take longer because they can't reason about why a change might work, they just try it.
+
+AlphaEvolve from DeepMind is the more interesting comparison. It maintains a population of programs and uses an LLM as the mutator inside an evolutionary loop, so it gets the "agent can read code and reason" benefit of AutoResearch and the "exploration via population diversity" benefit of evolutionary search. It allows fitness to drop temporarily for some members of the population, which is the exact thing AutoResearch's ratchet rules out. The trade-off is compute. AlphaEvolve is a Google-scale system. AutoResearch is one GPU and one branch.
+
+Here it is in pseudocode side-by-side:
+
+```python
+# AutoResearch — monotonic ratchet
+while True:
+    change = agent.propose(context=[program_md, train_py, results_tsv])
+    apply(change); git_commit(change)
+    score = train_for_5_minutes()
+    if score < best:
+        best = score                       # commit stays
+    else:
+        run("git reset HEAD~1")            # discard, never happened
+
+# AlphaEvolve — evolutionary loop with LLM mutator
+population = [seed_program]
+while True:
+    parent = sample(population, weighted_by=fitness)
+    child = agent.mutate(parent)
+    child.fitness = evaluate(child)
+    population = prune(population + [child])   # diversity preserved,
+                                               # low-fitness members survive
+```
+
+So if I had to put it plainly. Reach for AutoML when your problem is a clean hyperparameter sweep and you don't want to write search code yourself. Reach for NAS when you have a lot of compute and you genuinely don't know what architecture you need. Reach for AlphaEvolve-style approaches when you want creative leaps and you have the budget to keep a whole set of candidate train.py variants alive at once, letting some of them sit at lower scores in case they pay off later. And reach for AutoResearch when you have a working system, a clean metric, a single GPU, and you want to squeeze out the wins that a human would miss because they got bored.
+
+Honestly, AutoResearch is closer to a polish machine than anything else. You set the dials in the right neighborhood and the agent finds the better numbers. Asking it to invent something new is asking it to do a job the loop doesn't allow and the model isn't built for.
