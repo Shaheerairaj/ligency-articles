@@ -26,6 +26,10 @@ What the default register looks like in practice:
 - **Slightly imprecise word choice on purpose.** "Actually determined a success" instead of "succeeded." "The moves the agent actually makes" instead of "the agent's moves." A polished writer would tighten; you leave the looseness.
 - **Plain language over jargon when both work.** "Bits the model needs to predict each byte" before "compressed entropy per byte." When jargon shows up because it has to, explain it in a short parenthetical instead of assuming the reader already knows.
 - **Avoid absolute claims.** "Might not be as quantitative," "is by far the trickiest part," "lots of room for improvement." No marketing-speak, no "revolutionary," no "powerful."
+- **Image-y verbs over flat ones.** "Creeps down" instead of "decreases." "Spins in circles" instead of "fails to converge." "Chew on" instead of "process." Pick the verb that gives the reader a picture.
+- **Colloquial metaphors that ground abstract ideas.** "Hand the keys over." "In the seat." "A brief you'd hand to a contractor." A concrete physical image where a polished writer would reach for an abstract verb.
+- **Personal opinion inserted as a casual mid-sentence aside.** Drop your take in without giving it its own paragraph: "and I think the framing is very well done here." Treats the reader as a peer rather than an audience.
+- **Repetition for anchoring.** Restate a key idea from a different angle to lock it in. "The recipe is the surrounding system. The repo itself is the recipe." Don't avoid repetition when the point matters, lean into it.
 
 Four signature moves are available as accents. Use sparingly. The right cadence is once or twice per section, at moments that earn them. Used in every paragraph they lose their edge.
 
@@ -42,7 +46,7 @@ These words and phrases do not appear in the final article. Not once.
  
 **Banned vocabulary:** delve, leverage, leveraged, leveraging, robust, seamless, transformative, navigate (metaphorical), unlock, harness, tapestry, landscape (metaphorical), realm, ecosystem (metaphorical), game-changer, revolutionary, groundbreaking, powerful (as filler), cutting-edge, state-of-the-art (as filler), paradigm shift, holistic, synergy, streamline, empower, foster, facilitate, utilize (use "use"), commence (use "start"), terminate (use "end" or "stop"), demonstrate (use "show"), elucidate, illuminate (metaphorical), underscore, crucial, vital, essential (as filler), pivotal, paramount, fundamental (as filler).
  
-**Banned filler phrases:** "in today's [anything] world," "in the ever-evolving," "it's worth noting that," "it's important to note that," "moreover," "furthermore," "crucially," "notably," "ultimately," "at its core," "at the end of the day," "when it comes to," "in order to" (use "to"), "the fact that" (cut it), "needless to say," "that being said."
+**Banned filler phrases:** "in today's [anything] world," "in the ever-evolving," "it's worth noting that," "it's important to note that," "moreover," "furthermore," "crucially," "notably," "ultimately," "at its core," "at the end of the day," "when it comes to," "in order to" (use "to"), "the fact that" (cut it), "needless to say," "that being said," "load-bearing" / "load bearing," "unpacking" (as a meta-word for explanation, e.g. "needs more unpacking"), "earns its keep," "the comparison still holds," "heavy lifting" (as filler), "most demos skip [this]" / "[this is] what most demos don't do" (any framing implying other demos/articles fall short), "doing a lot of quiet work" / "doing a lot of the work" / "[X] is doing a lot of [adjective] work" as a framing for under-the-hood mechanisms.
  
 **Banned sentence patterns:**
 - "From X to Y" framing for showing range or variety
@@ -78,6 +82,15 @@ These are the moves that make the article not sound like every other ML explaine
 **Name people, tools, versions.** "Tobi Lütke" not "the Shopify CEO." "Claude Code" not "a coding agent." "FineWeb-Edu" not "the training corpus." "Muon+AdamW" not "the optimizer." Specifics signal that the writer actually knows the space.
  
 **Commit to opinions.** When discussing the creativity ceiling, take a position on whether it's the framework or the model. When comparing to AlphaEvolve, say which is the better fit for which use case and why. Hedged analysis is what generic content does.
+
+**Grammatical Errors are Ok.** Things like missing commas and run on sentences make the text feel natural. Lean into this rather than perfect grammar. Specific patterns to leave alone:
+- Lowercase after a quote-period: `Karpathy calls this "the right recipe." and I think the framing is...`
+- Missing articles in mid-sentence asides: "agent demos that are marketed to improve system don't get right"
+- Comma splices where a stricter writer would use a period or semicolon
+- Run-on sentences that chain clauses with `and...and...`
+- Sentence fragments that punch where they need to
+
+These are not errors to fix in a final pass. They are the texture.
 
 ## Suggested Chapters
 
