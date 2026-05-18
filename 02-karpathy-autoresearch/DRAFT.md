@@ -26,7 +26,11 @@ autoresearch/
 └── ...
 ```
 
-The three files are program.md, train.py, and prepare.py, and the names give most of it away. program.md is a plain markdown document where the human describes what they want the agent to do, the constraints, the things it's allowed to touch, the things it is NOT allowed to touch, and it reads almost like a brief you'd hand to a contractor. train.py is the actual training script, the model, the optimizer, the loop, the eval, all of it, and at around 630 lines it's the file the agent spends most of its time inside, reading, editing, running, trying things. prepare.py handles the data side, mostly tokenization and the validation set, and unlike train.py the agent is locked out of this one, it's the fixed yardstick, the thing that makes sure val_bpb means the same thing on run 1 and run 100.
+The three files are program.md, train.py, and prepare.py, and the names give most of it away.
+
+- program.md is a plain markdown document where the human describes what they want the agent to do, the constraints, the things it's allowed to touch, the things it is NOT allowed to touch. It reads almost like a brief you'd hand to a contractor.
+- train.py is the actual training script, the model, the optimizer, the loop, the eval, all of it. Around 630 lines, and the file the agent spends most of its time inside, reading, editing, running, trying things.
+- prepare.py handles the data side, mostly tokenization and the validation set. Unlike train.py the agent is locked out of this one, it's the fixed yardstick, the thing that makes sure val_bpb means the same thing on run 1 and run 100.
 
 So that's the human side. You write program.md, you write train.py once in a state where it actually runs end to end, you set up prepare.py once to produce the data the trainer can chew on, and then you walk away.
 
@@ -153,13 +157,13 @@ Last section closed with the twenty-year point. Karpathy's loop, run overnight, 
 
 What it reliably finds is the same shape of thing as the weight decay change. One-line edits, no architectural risk, the kind of thing a researcher writes once, ships, and then never goes back to look at again because there are a hundred other knobs to turn. The ratchet doesn't move on to the next knob. It sits on the same knob and tries every reasonable value, then the next adjacent knob, then the next. It's good at this. Optimizer parameters that drifted out of tune over the years, init schemes that were chosen before the network depth changed, learning rate schedules that were copy-pasted from a different paper, all of these get noticed because the loop has time to actually check them and the human doesn't.
 
-What it doesn't find is anything that requires going backwards before going forwards. Anything that needs the model to get worse for a few iterations before the bigger payoff lands. Anything that's outside the local neighborhood of the existing train.py. GitHub Issue #22 on the repo describes this directly, the agents "cycle through minor variations of whatever worked last, stuck in a local search pattern." Once the loop has found a good neighborhood it stays there.
+What it doesn't find is anything that requires going backwards before going forwards. Anything that needs the model to get worse for a few iterations before the bigger payoff lands. Anything that's outside the local neighborhood of the existing train.py. GitHub Issue #22 on the repo describes this, the agents "cycle through minor variations of whatever worked last, stuck in a local search pattern." Once the loop has found a good neighborhood it stays there.
 
-Why does this happen, and is it the model's fault or the framework's. My take is that it's both, and you have to be honest about both contributions or you'll spend a weekend trying to fix the wrong one.
+Why does this happen? And is it the model's fault or the framework's? My take is that it's both, and you have to be honest about both contributions or you'll spend a weekend trying to fix the wrong one.
 
 The model contribution is RLHF, specifically the reward shaping that makes Claude (and GPT, and the rest) friendly and helpful and safe. Karpathy himself talked about this on Hacker News, the agents on open-ended problems come across as "cagy and scared," which is exactly the wrong personality for a creative search task. An agent that's been trained to produce safe, conservative outputs is going to keep proposing safe, conservative experiments, things like tweaking a number, adding weight decay, or switching the activation function, rather than something like "rewrite the attention mechanism from scratch as something that doesn't exist in the literature yet." Even if the model could write that code, it has been gently trained out of suggesting it.
 
-The framework contribution is the ratchet. The rule is simple, every change has to immediately improve val_bpb or it gets reset out. A change that would have improved the metric in the long run, but first made it worse for a few iterations, cannot survive `git reset HEAD~1`. The loop has no concept of "I'll allow this to be worse for two iterations and see what happens." It's strict. That strictness is also what makes the loop reliable, you can't get both. You either trust monotonic improvement as the signal and lose the ability to explore valleys, or you allow exploration and lose the guarantee that things are getting better.
+The thing that is contributing to the framework the most is the ratchet. The rule is simple, every change has to immediately improve val_bpb or it gets reset out. A change that would have improved the metric in the long run, but first made it worse for a few iterations, cannot survive `git reset HEAD~1`. The loop has no concept of "I'll allow this to be worse for two iterations and see what happens." It's strict. That strictness is also what makes the loop reliable, you can't get both. You either trust monotonic improvement as the signal and lose the ability to explore valleys, or you allow exploration and lose the guarantee that things are getting better.
 
 If you put the two together, what you have is an agent that wouldn't propose a wild change anyway, running inside a framework that wouldn't accept one if it did. Belt and suspenders for incremental progress. Which is fine, as long as you know that's what you're buying.
 
@@ -190,7 +194,12 @@ while True:
                                                # low-fitness members survive
 ```
 
-So if I had to put it plainly. Reach for AutoML when your problem is a clean hyperparameter sweep and you don't want to write search code yourself. Reach for NAS when you have a lot of compute and you genuinely don't know what architecture you need. Reach for AlphaEvolve-style approaches when you want creative leaps and you have the budget to keep a whole set of candidate train.py variants alive at once, letting some of them sit at lower scores in case they pay off later. And reach for AutoResearch when you have a working system, a clean metric, a single GPU, and you want to squeeze out the wins that a human would miss because they got bored.
+So if I had to put it plainly.
+
+- AutoML when your problem is a clean hyperparameter sweep and you don't want to write search code yourself.
+- NAS when you have a lot of compute and you genuinely don't know what architecture you need.
+- AlphaEvolve-style approaches when you want creative leaps and you have the budget to keep a whole set of candidate train.py variants alive at once, letting some of them sit at lower scores in case they pay off later.
+- AutoResearch when you have a working system, a clean metric, a single GPU, and you want to squeeze out the wins that a human would miss because they got bored.
 
 Honestly, AutoResearch is closer to a polish machine than anything else. You set the dials in the right neighborhood and the agent finds the better numbers. Asking it to invent something new is asking it to do a job the loop doesn't allow and the model isn't built for.
 
@@ -198,14 +207,33 @@ Honestly, AutoResearch is closer to a polish machine than anything else. You set
 
 So back to the question from page one. Is this worth you taking out a weekend and taking it for a spin?
 
-Mostly comes down to whether your problem looks like the problem AutoResearch was built for. There are four things in particular that have to line up. You need a system that already trains end to end, because the loop only works on a working baseline. You need a metric you trust, not just any number but one that genuinely captures what "better" means for your model, because the ratchet has only that signal to work with. You need experiments that fit inside a short wall-clock window, because the loop relies on running many of them per night. And you need to be looking for incremental improvements rather than breakthroughs, because the model and the framework will both push the agent toward the polish-machine corner.
+Mostly comes down to whether your problem looks like the problem AutoResearch was built for. There are four things in particular that have to line up.
+
+- A system that already trains end to end, because the loop only works on a working baseline.
+- A metric you trust, not just any number but one that genuinely captures what "better" means for your model, because the ratchet has only that signal to work with.
+- Experiments that fit inside a short wall-clock window, because the loop relies on running many of them per night.
+- A goal of incremental improvements rather than breakthroughs, because the model and the framework will both push the agent toward the polish-machine corner.
 
 When all four of those line up, it's definitely worth your weekend, and maybe a bit more than that. You write your version of program.md, you make sure your train.py is in a clean state, you pick a tight metric, you point Claude Code or Cursor at it, and you go to sleep. In the morning you look at `git log` and results.tsv and see what fell out. Maybe it's a weight-decay-on-value-embeddings type win that you'd been blind to for years. Maybe it's a learning rate retune. Maybe it's nothing useful that night and you try again the next. The numbers work out fine, you'll spend some money on the agent's inference calls overnight but not enough to flinch at, you only need one GPU, and if nothing useful turns up the downside is a few hours of compute, no more.
 
-If any of those four are missing, the math goes sideways. If your training run takes a week instead of five minutes, the loop is dead in the water from the start, you'll get one or two experiments in the time AutoResearch would have done a hundred and you've removed the volume that makes the ratchet work. If your metric is noisy and tiny improvements aren't trustworthy, the agent will treat noise as signal and commit changes that didn't actually move the model, leaving you a chain of pretend-progress to clean up in the morning. If you need creative leaps, like a new architecture or a different training paradigm, the ratchet will not get you there for the reasons section 6 laid out, and you'd be better off either reading some papers or reaching for something like AlphaEvolve.
+If any of those four are missing, it might not be the best approach.
 
-There's a second thing worth taking from the repo even if you decide against wiring it in. The recipe itself, by which I mean the four-piece thing of "a tight metric, a trainer, a brief, and a ratchet that only accepts winners," is reusable as a PATTERN for any agent-driven workflow you might be designing. Shopify, the company behind the e-commerce platform, ran a piece on their engineering blog applying this exact shape outside of ML, to their internal build pipelines and test runs, and reported things like 65 percent faster builds from the same pattern. The lesson holds outside ML, pick a number you trust, write a brief that names the rules, point an agent at it, and reject anything that doesn't move the number. The autoresearch repo is a small concrete example of a much larger pattern.
+- If your training run takes a week instead of five minutes, the loop is dead in the water from the start, you'll get one or two experiments in the time AutoResearch would have done a hundred and you've removed the volume that makes the ratchet work.
+- If your metric is noisy and tiny improvements aren't trustworthy, the agent will treat noise as signal and commit changes that didn't actually move the model, leaving you a chain of pretend-progress to clean up in the morning.
+- If you need creative leaps, like a new architecture or a different training paradigm, the ratchet will not get you there for the reasons section 6 laid out, and you'd be better off either reading some papers or trying something like AlphaEvolve.
 
-So. Should you wire it in. If your problem matches the four-part fit and you have a weekend, yes, give it a shot, you'll come away with something whether or not the metric ends up dropping by much. If your problem doesn't match, the more useful takeaway is the pattern itself.
+There's a second thing worth taking from the repo even if you decide against wiring it in. The recipe itself, by which I mean the four-piece thing of "a tight metric, a trainer, a brief, and a ratchet that only accepts winners," is reusable as a PATTERN for any agent-driven workflow you might be designing. Shopify, the company behind the e-commerce platform, ran a piece on their engineering blog applying this exact shape outside of ML, to their internal build pipelines and test runs, and reported things like 65 percent faster builds from the same pattern. The lesson applies outside of ML too, pick a number you trust, write a brief that names the rules, point an agent at it, and reject anything that doesn't move the number. The autoresearch repo is a small concrete example of a much larger way of looking at how to improve any kind of system that meets the 4 criteria set at the start of this section.
 
-Either way you walk away with a real sense of what's actually inside the box. The three files, the one number, the ratchet that only accepts winners, where the loop works, where it stalls, and the recipe pattern that you can lift out and reuse on something else. None of that knowledge is wasted whether you spin up the loop tonight or never touch the repo again.
+So. Should you wire it in? If your problem matches the four-part criteria and you have a weekend, yes, give it a shot, you'll come away with something whether or not the metric ends up dropping by much. If your problem doesn't match, the more useful takeaway is the pattern itself.
+
+Either way you walk away with a real sense of what's actually inside the box. The three files, the one number, the ratchet that only accepts winners, where the loop works, where it doesn't, and the recipe pattern that you can lift out and reuse on something else. None of that knowledge is wasted whether you spin up the loop tonight or never touch the repo again.
+
+## 8. The thing that's actually new
+
+One more thing before we close out. The reason this repo got the reaction it got, the stars, the interviews, the long threads on Hacker News, has very little to do with the agent itself. Coding agents already existed before autoresearch dropped. Claude Code existed. Cursor existed. People had been pointing them at ML repos for a year and getting nowhere useful.
+
+What was new was the scaffolding, and I want to make this very clear, because "the scaffolding" sounds abstract until you see the pieces. The metric choice, val_bpb instead of perplexity. The 5-minute wall-clock budget. The git-as-experiment-store trick. The immutable yardstick in prepare.py. The directive in program.md against ugly complexity. The 630 lines of train.py that fit inside a context window with room to spare. The git reset that throws away losses so the codebase only moves forward. None of these is impressive on its own. Most of them are one paragraph in a README. Put them together though and you have the difference between an agent that drifts and an agent that improves.
+
+If you're designing an agent-driven workflow for something outside of ML, you are still able to apply the "recipe" of autoresearch. Tighten the contract (how the improvement runs will work). Pick the number (the immutable metric to benchmark against). Reject anything that doesn't move the number. Give the agent only what it needs to read, and lock the rest.
+
+And then the loop runs, and the number creeps down, and you go to bed.
