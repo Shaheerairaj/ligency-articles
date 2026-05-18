@@ -8,7 +8,7 @@
 - Worth a weekend if you have a working trainer, a metric you trust, experiments that run in minutes, and a goal of squeezing wins rather than chasing breakthroughs. The four-part fit matters more than enthusiasm.
 - The bigger picture is the scaffolding pattern. A tight contract coupled with one metric, reject anything that doesn't move it. The agent is the cook, the recipe is everything around it.
 
-## 1. The claim worth checking
+## 1. The claim of autoresearch
 
 A few months back Andrej Karpathy pushed a small repo called autoresearch. Maybe a thousand lines of Python, a markdown file, a training script. You point a coding agent at it, walk away for the afternoon, and when you come back the model trains better than it did when you left. Not by a lot. But better, every time, with no one touching the code.
 
@@ -82,7 +82,7 @@ Now you might be thinking, prepare.py is immutable, the agent can't change the t
 
 Pick the wrong metric and the whole loop wobbles. If the agent is chasing perplexity and accidentally finds a way to change tokenization, it scores "better" without the model actually being better. If it's chasing some hand-wavy "feels like a good model" signal, there's nothing to ratchet against. val_bpb is one of those choices that looks small in the README but the whole loop depends on it being right.
 
-## 4. The ratchet, which is the actual idea
+## 4. The ratchet, the meat of the system
 
 Now we get to the bit that makes the whole thing work. Karpathy calls it "the right recipe" and most of the recipe is just this one mechanism. It's almost embarrassingly simple, which I think is part of what threw a lot of people off when the repo dropped, because the natural assumption with an "agent does ML research" demo is that there must be something clever happening under the hood. There isn't. The cleverness is in choosing not to do anything clever.
 
@@ -171,7 +171,7 @@ There's a catch here though. What looks simple from the outside is only simple b
 
 That this kind of bounded, scaffolded loop is still enough to find improvements a human missed for twenty years is what makes the whole thing interesting, and we'll come back to what that means in the next section.
 
-## 6. Where it works, where it stalls
+## 6. Where it works, where it doesn't
 
 Last section closed with the twenty-year point. Karpathy's loop, run overnight, surfaced something he had missed across decades of refining the same training setup, specifically that he wasn't applying weight decay to the value embeddings. That kind of small, mechanical fix is exactly what the ratchet is good at. The question for this section is what other kinds of changes it finds, and what kinds it never will. That's the call you need to make if you're deciding whether to wire this into your own work.
 
@@ -248,7 +248,7 @@ So. Should you wire it in? If your problem matches the four-part criteria and yo
 
 Either way you walk away with a real sense of what's actually inside the box. The three files, the one number, the ratchet that only accepts winners, where the loop works, where it doesn't, and the recipe pattern that you can lift out and reuse on something else. None of that knowledge is wasted whether you spin up the loop tonight or never touch the repo again.
 
-## 8. The thing that's actually new
+## 8. Conclusion
 
 One more thing before we close out. The reason this repo got the reaction it got, the stars, the interviews, the long threads on Hacker News, has very little to do with the agent itself. Coding agents already existed before autoresearch dropped. Claude Code existed. Cursor existed. People had been pointing them at ML repos for a year and getting nowhere useful.
 
