@@ -1,5 +1,13 @@
 # A Practical Guide to Andrej Karpathy's AutoResearch
 
+## TL;DR
+
+- AutoResearch is a small repo from Andrej Karpathy. A coding agent edits train.py, runs the training for exactly 5 minutes, and only the changes that lower val_bpb (validation bits per byte) get to stay. Everything else gets `git reset HEAD~1`'d out of existence.
+- Three files, one number, one rule. program.md is the human's brief, prepare.py is immutable, train.py is the only file the agent edits. The ratchet rule, improve val_bpb or get rolled back, is where most of the cleverness lives.
+- Think of this as a polish machine. The published overnight run did 83 experiments, 15 of which won, and val_bpb dropped from 1.000 to 0.975. Good at finding the small things a tired researcher stops noticing but not so much at creative leaps, partly because of RLHF, partly because the ratchet won't tolerate a temporary dip.
+- Worth a weekend if you have a working trainer, a metric you trust, experiments that run in minutes, and a goal of squeezing wins rather than chasing breakthroughs. The four-part fit matters more than enthusiasm.
+- The bigger picture is the scaffolding pattern. A tight contract coupled with one metric, reject anything that doesn't move it. The agent is the cook, the recipe is everything around it.
+
 ## 1. The claim worth checking
 
 A few months back Andrej Karpathy pushed a small repo called autoresearch. Maybe a thousand lines of Python, a markdown file, a training script. You point a coding agent at it, walk away for the afternoon, and when you come back the model trains better than it did when you left. Not by a lot. But better, every time, with no one touching the code.
@@ -39,6 +47,10 @@ The number the agent is chasing is val_bpb, short for validation bits per byte, 
 And then there's the ratchet, which is the thing that makes the whole loop work. After the agent makes a change and runs the training, one of two things happens. Either val_bpb went down, in which case the change gets committed to git and becomes the new baseline, or it didn't, in which case the change gets reset out of existence and the agent goes back to where it was before to try something else so we never commit to git failed runs, only runs which meaningfully made an improvement in our training. That's the entire mechanism, and we'll spend a lot of time on it later because it's where most of the cleverness lives.
 
 That's the picture. Three files, one number, one git-backed accept-or-reject step. You can hold all of it in your head at once, which is more than what you can say for a lot of ML pipelines and repos, and is part of what makes the repo worth reading even if you never actually run it.
+
+**[FIGURE 1 — placeholder]**
+
+System architecture diagram showing the autoresearch loop end to end.
 
 ## 3. The one number that runs everything
 
@@ -100,6 +112,10 @@ git reset HEAD~1   # the change is gone, like it never happened
 # if val_bpb went down: do nothing, the commit becomes the new baseline
 ```
 
+**[FIGURE 2 — placeholder]**
+
+Ratchet decision flowchart, zoomed in on the accept-or-reject gate.
+
 And results.tsv ends up looking something like this (columns: commit, val_bpb, GPU memory, status, description):
 
 ```
@@ -120,6 +136,10 @@ Third, the 5-minute fixed wall-clock budget is what keeps every experiment compa
 And then there is the failure handling, which is the kind of unglamorous engineering that decides whether the loop survives overnight. The PASS/FAIL column in results.tsv exists because train.py crashes sometimes. The agent makes a change, training NaNs out at step 800, no val_bpb gets produced. The system has to notice this, mark it FAIL in results.tsv, `git reset HEAD~1` the broken commit, and keep going. No human cleanup. Otherwise the loop stalls at 2am while you're asleep, which defeats the whole point.
 
 The numbers on an initial overnight run, from the released stats, are 83 experiments and 15 improvements, with val_bpb going from 1.000 down to 0.975. So 15 out of 83 changes actually beat the existing baseline, the other 68 got reset back into the void. That ratio, roughly 1 in 5, is what the ratchet looks like in practice.
+
+**[FIGURE 3 — placeholder]**
+
+val_bpb staircase plot from Karpathy's overnight run.
 
 For a sense of what the ratchet is actually finding, here is an example. In one of his earlier tests Karpathy ran the loop overnight against a small LLM training setup he had personally been refining for close to twenty years, and the system surfaced improvements even Karpathy had missed. Two specific ones come up in interviews, he was not applying weight decay to the value embeddings, and his optimizer parameters were under-tuned. Both the kind of small, mechanical things a tired human stops noticing after the hundredth pass over the same code. The ratchet does not get tired.
 
