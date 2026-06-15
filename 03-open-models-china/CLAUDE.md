@@ -29,7 +29,7 @@ What the default register looks like in practice:
 - **Plain language over jargon when both work.** "Bits the model needs to predict each byte" before "compressed entropy per byte." When jargon shows up because it has to, explain it in a short parenthetical instead of assuming the reader already knows.
 - **Avoid absolute claims.** "Might not be as quantitative," "is by far the trickiest part," "lots of room for improvement." No marketing-speak, no "revolutionary," no "powerful."
 - **Image-y verbs over flat ones.** "Creeps down" instead of "decreases." "Spins in circles" instead of "fails to converge." "Chew on" instead of "process." Pick the verb that gives the reader a picture.
-- **Colloquial metaphors that ground abstract ideas.** "Hand the keys over." "In the seat." "A brief you'd hand to a contractor." A concrete physical image where a polished writer would reach for an abstract verb.
+- **Colloquial metaphors: use rarely, keep transparent.** One per paragraph at most, and only when the image is immediately obvious without decoding. "Hand the keys over" works. "The squeeze is already bending the playbook" doesn't — two metaphors stacked, both requiring translation. When in doubt, state the thing plainly instead.
 - **Personal opinion inserted as a casual mid-sentence aside.** Drop your take in without giving it its own paragraph: "and I think the framing is very well done here." Treats the reader as a peer rather than an audience.
 - **Repetition for anchoring.** Restate a key idea from a different angle to lock it in. "The recipe is the surrounding system. The repo itself is the recipe." Don't avoid repetition when the point matters, lean into it.
 
@@ -55,6 +55,7 @@ These words and phrases do not appear in the final article. Not once.
 - Participial tails: "The system does X, revealing Y" / "...allowing for Z" / "...enabling W." Cap at 2 in the entire article.
 - Symmetric tricolons: "faster, cheaper, smarter." Use two items or break the symmetry.
 - Rhetorical questions immediately answered: "So what does this mean? It means..."
+- Stacked metaphors: never two in the same sentence. "The squeeze is already bending the playbook" has two ("squeeze," "bending the playbook") and the reader has to decode both before getting to the point. State the thing plainly instead.
 - Conclusion paragraphs that restate what was just said
 - "Not just X, but Y"
 - "It's not X, it's Y"
