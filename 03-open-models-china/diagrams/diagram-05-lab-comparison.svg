@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif;">
+  <rect width="800" height="440" fill="#fff"/>
+
+  <text x="20" y="30" font-size="17" font-weight="600" fill="#1e293b">Chinese open-weight labs: mid-2026 snapshot</text>
+
+  <!--
+    Table: x=20..780, y=50..400
+    Columns: Lab(80) | Model(105) | Released(95) | Params(130) | License(80) | AA Score(70) | Known for(200)
+    x starts: 20, 100, 205, 300, 430, 510, 580
+    Header row: y=50, h=36
+    Data rows: h=44, starting y=86
+  -->
+
+  <!-- Header background -->
+  <rect x="20" y="50" width="760" height="36" fill="#1e293b" rx="4"/>
+  <text x="60"  y="73" font-size="12" font-weight="600" fill="#f8fafc">Lab</text>
+  <text x="152" y="73" font-size="12" font-weight="600" fill="#f8fafc">Model</text>
+  <text x="252" y="73" font-size="12" font-weight="600" fill="#f8fafc">Released</text>
+  <text x="345" y="73" font-size="12" font-weight="600" fill="#f8fafc">Parameters</text>
+  <text x="435" y="73" font-size="12" font-weight="600" fill="#f8fafc">License</text>
+  <text x="515" y="73" font-size="12" font-weight="600" fill="#f8fafc">AA Score</text>
+  <text x="588" y="73" font-size="12" font-weight="600" fill="#f8fafc">Known for</text>
+
+  <!-- Row 1: DeepSeek V4 Pro (white bg) -->
+  <rect x="20" y="86" width="760" height="44" fill="#fff"/>
+  <rect x="20" y="86" width="4" height="44" fill="#dc2626"/>
+  <text x="32"  y="112" font-size="12.5" font-weight="600" fill="#1e293b">DeepSeek</text>
+  <text x="105" y="112" font-size="12" fill="#374151">V4 Pro</text>
+  <text x="210" y="112" font-size="12" fill="#374151">Apr 2026</text>
+  <text x="305" y="108" font-size="12" fill="#374151">1.6T total</text>
+  <text x="305" y="122" font-size="11" fill="#64748b">(MoE)</text>
+  <text x="435" y="112" font-size="12" fill="#374151">MIT</text>
+  <text x="530" y="112" font-size="14" font-weight="700" fill="#dc2626">52</text>
+  <text x="588" y="108" font-size="12" fill="#374151">Cheapest API</text>
+  <text x="588" y="122" font-size="11" fill="#64748b">$3.48 / $0.28 Flash</text>
+
+  <!-- Row 2: Kimi K2.6 (light bg) -->
+  <rect x="20" y="130" width="760" height="44" fill="#f8fafc"/>
+  <rect x="20" y="130" width="4" height="44" fill="#dc2626"/>
+  <text x="32"  y="156" font-size="12.5" font-weight="600" fill="#1e293b">Moonshot</text>
+  <text x="105" y="156" font-size="12" fill="#374151">Kimi K2.6</text>
+  <text x="210" y="156" font-size="12" fill="#374151">Apr 20, 2026</text>
+  <text x="305" y="152" font-size="12" fill="#374151">1T total / 32B active</text>
+  <text x="305" y="166" font-size="11" fill="#64748b">(MoE)</text>
+  <text x="435" y="156" font-size="12" fill="#374151">Mod. MIT</text>
+  <text x="530" y="156" font-size="14" font-weight="700" fill="#dc2626">54</text>
+  <text x="588" y="152" font-size="12" fill="#374151">Agentic coding</text>
+  <text x="588" y="166" font-size="11" fill="#64748b">300-subagent swarm</text>
+
+  <!-- Row 3: Qwen (white bg) -->
+  <rect x="20" y="174" width="760" height="44" fill="#fff"/>
+  <rect x="20" y="174" width="4" height="44" fill="#dc2626"/>
+  <text x="32"  y="200" font-size="12.5" font-weight="600" fill="#1e293b">Alibaba</text>
+  <text x="105" y="200" font-size="12" fill="#374151">Qwen3.7</text>
+  <text x="210" y="200" font-size="12" fill="#374151">2026</text>
+  <text x="305" y="196" font-size="12" fill="#374151">Various sizes</text>
+  <text x="305" y="210" font-size="11" fill="#64748b">(dense + MoE)</text>
+  <text x="435" y="196" font-size="12" fill="#374151">Mixed</text>
+  <text x="435" y="210" font-size="11" fill="#64748b">Max = closed</text>
+  <text x="530" y="200" font-size="12" fill="#94a3b8">—</text>
+  <text x="588" y="196" font-size="12" fill="#374151">Widest ecosystem</text>
+  <text x="588" y="210" font-size="11" fill="#64748b">113K+ derivatives</text>
+
+  <!-- Row 4: GLM-5 (light bg) -->
+  <rect x="20" y="218" width="760" height="44" fill="#f8fafc"/>
+  <rect x="20" y="218" width="4" height="44" fill="#dc2626"/>
+  <text x="32"  y="244" font-size="12.5" font-weight="600" fill="#1e293b">Zhipu</text>
+  <text x="105" y="244" font-size="12" fill="#374151">GLM-5</text>
+  <text x="210" y="244" font-size="12" fill="#374151">Feb 11, 2026</text>
+  <text x="305" y="240" font-size="12" fill="#374151">744B total / 40B active</text>
+  <text x="305" y="254" font-size="11" fill="#64748b">(MoE, Ascend-trained)</text>
+  <text x="435" y="244" font-size="12" fill="#374151">—</text>
+  <text x="530" y="244" font-size="14" font-weight="700" fill="#dc2626">51</text>
+  <text x="588" y="240" font-size="12" fill="#374151">No Nvidia hardware</text>
+  <text x="588" y="254" font-size="11" fill="#64748b">Trained on Ascend end-to-end</text>
+
+  <!-- Row 5: MiMo (white bg) -->
+  <rect x="20" y="262" width="760" height="44" fill="#fff"/>
+  <rect x="20" y="262" width="4" height="44" fill="#dc2626"/>
+  <text x="32"  y="288" font-size="12.5" font-weight="600" fill="#1e293b">Xiaomi</text>
+  <text x="105" y="288" font-size="12" fill="#374151">MiMo-V2.5-Pro</text>
+  <text x="210" y="288" font-size="12" fill="#374151">2026</text>
+  <text x="305" y="288" font-size="12" fill="#374151">—</text>
+  <text x="435" y="288" font-size="12" fill="#374151">—</text>
+  <text x="530" y="288" font-size="14" font-weight="700" fill="#dc2626">54</text>
+  <text x="588" y="284" font-size="12" fill="#374151">Tied for open leader</text>
+  <text x="588" y="298" font-size="11" fill="#64748b">Phone company entry</text>
+
+  <!-- Row 6: MiniMax (light bg) -->
+  <rect x="20" y="306" width="760" height="44" fill="#f8fafc"/>
+  <rect x="20" y="306" width="4" height="44" fill="#dc2626"/>
+  <text x="32"  y="332" font-size="12.5" font-weight="600" fill="#1e293b">MiniMax</text>
+  <text x="105" y="332" font-size="12" fill="#374151">M3</text>
+  <text x="210" y="332" font-size="12" fill="#374151">2026</text>
+  <text x="305" y="332" font-size="12" fill="#374151">—</text>
+  <text x="435" y="332" font-size="12" fill="#374151">—</text>
+  <text x="530" y="328" font-size="12" fill="#94a3b8">unverified</text>
+  <text x="530" y="341" font-size="10" fill="#f59e0b">★ self-reported</text>
+  <text x="588" y="328" font-size="12" fill="#374151">HK IPO Jan 2026</text>
+  <text x="588" y="342" font-size="11" fill="#64748b">Stock doubled day one</text>
+
+  <!-- Table border -->
+  <rect x="20" y="50" width="760" height="300" fill="none" stroke="#e2e8f0" stroke-width="1" rx="4"/>
+
+  <!-- Column dividers -->
+  <line x1="100" y1="86" x2="100" y2="350" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="205" y1="86" x2="205" y2="350" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="300" y1="86" x2="300" y2="350" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="430" y1="86" x2="430" y2="350" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="508" y1="86" x2="508" y2="350" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="580" y1="86" x2="580" y2="350" stroke="#f1f5f9" stroke-width="1"/>
+
+  <text x="20" y="382" font-size="10" fill="#94a3b8">AA Score = Artificial Analysis Intelligence Index as of June 2026. ★ = self-reported by lab, independent verification pending.</text>
+  <text x="20" y="396" font-size="10" fill="#94a3b8">Qwen3.7 Max (flagship) is closed; smaller open tiers available. MiMo and MiniMax parameter counts not publicly disclosed.</text>
+</svg>

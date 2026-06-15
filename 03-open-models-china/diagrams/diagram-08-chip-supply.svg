@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    </style>
+  </defs>
+
+  <!-- White background -->
+  <rect width="800" height="480" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="400" y="36" text-anchor="middle" font-size="18" font-weight="700" fill="#1e293b">China's chip independence: training vs inference</text>
+  <!-- Subtitle -->
+  <text x="400" y="58" text-anchor="middle" font-size="13" fill="#64748b">Export controls bite hardest on training. Running models is a different story.</text>
+
+  <!-- LEFT COLUMN background -->
+  <rect x="20" y="74" width="360" height="330" rx="10" fill="#fff5f5" stroke="#fecaca" stroke-width="1.5"/>
+
+  <!-- RIGHT COLUMN background -->
+  <rect x="420" y="74" width="360" height="330" rx="10" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.5"/>
+
+  <!-- Vertical divider -->
+  <line x1="400" y1="84" x2="400" y2="394" stroke="#e2e8f0" stroke-width="2"/>
+
+  <!-- ===== LEFT COLUMN ===== -->
+
+  <!-- Lock icon (circle with shackle) -->
+  <g transform="translate(38, 86)">
+    <!-- Shackle -->
+    <path d="M8,10 L8,6 A6,6 0 0,1 20,6 L20,10" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- Body -->
+    <rect x="4" y="10" width="20" height="14" rx="3" fill="#ef4444"/>
+    <!-- Keyhole -->
+    <circle cx="14" cy="16" r="2.5" fill="#fff5f5"/>
+    <rect x="12.5" y="17" width="3" height="4" rx="1" fill="#fff5f5"/>
+  </g>
+
+  <!-- Left column header -->
+  <text x="72" y="102" font-size="15" font-weight="700" fill="#1e293b">Training new models</text>
+
+  <!-- Status badge — orange -->
+  <rect x="38" y="112" width="182" height="24" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+  <circle cx="56" cy="124" r="5" fill="#f59e0b"/>
+  <text x="68" y="129" font-size="12" font-weight="600" fill="#b45309">Still Nvidia-dependent</text>
+
+  <!-- Divider under badge -->
+  <line x1="38" y1="146" x2="368" y2="146" stroke="#fecaca" stroke-width="1"/>
+
+  <!-- Items -->
+  <!-- Item 1 -->
+  <rect x="38" y="154" width="18" height="18" rx="4" fill="#fca5a5"/>
+  <text x="47" y="166" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">✕</text>
+  <text x="66" y="167" font-size="13" font-weight="600" fill="#1e293b">Nvidia Blackwell GPUs</text>
+  <text x="66" y="182" font-size="11.5" fill="#64748b">Required for frontier-scale training</text>
+
+  <!-- Item 2 -->
+  <rect x="38" y="194" width="18" height="18" rx="4" fill="#fca5a5"/>
+  <text x="47" y="206" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">✕</text>
+  <text x="66" y="207" font-size="13" font-weight="600" fill="#1e293b">CUDA software stack</text>
+  <text x="66" y="222" font-size="11.5" fill="#64748b">Nvidia's proprietary compute layer</text>
+
+  <!-- Item 3 -->
+  <rect x="38" y="234" width="18" height="18" rx="4" fill="#fca5a5"/>
+  <text x="47" y="246" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">✕</text>
+  <text x="66" y="247" font-size="13" font-weight="600" fill="#1e293b">Massive parallel compute</text>
+  <text x="66" y="262" font-size="11.5" fill="#64748b">Tens of thousands of high-end GPUs</text>
+
+  <!-- Key fact box — left -->
+  <rect x="38" y="275" width="330" height="52" rx="7" fill="#fee2e2" stroke="#fca5a5" stroke-width="1.2"/>
+  <text x="53" y="293" font-size="11.5" font-weight="700" fill="#b91c1c">Key fact:</text>
+  <text x="53" y="308" font-size="11.5" fill="#7f1d1d">US officials say DeepSeek V4 was trained on</text>
+  <text x="53" y="322" font-size="11.5" fill="#7f1d1d">smuggled Blackwell chips</text>
+
+  <!-- Note under key fact -->
+  <text x="38" y="346" font-size="11" fill="#b45309" font-style="italic">"DeepSeek admits it can't serve V4-Pro at scale</text>
+  <text x="38" y="360" font-size="11" fill="#b45309" font-style="italic"> — not enough hardware"</text>
+
+  <!-- ===== RIGHT COLUMN ===== -->
+
+  <!-- Checkmark icon -->
+  <g transform="translate(438, 86)">
+    <circle cx="14" cy="14" r="13" fill="#16a34a"/>
+    <polyline points="7,14 12,19 21,9" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Right column header -->
+  <text x="464" y="102" font-size="15" font-weight="700" fill="#1e293b">Running finished models</text>
+
+  <!-- Status badge — green -->
+  <rect x="438" y="112" width="192" height="24" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <circle cx="456" cy="124" r="5" fill="#16a34a"/>
+  <text x="468" y="129" font-size="12" font-weight="600" fill="#15803d">Ascend making progress</text>
+
+  <!-- Divider under badge -->
+  <line x1="438" y1="146" x2="768" y2="146" stroke="#bbf7d0" stroke-width="1"/>
+
+  <!-- Items -->
+  <!-- Item 1 -->
+  <rect x="438" y="154" width="18" height="18" rx="4" fill="#86efac"/>
+  <text x="447" y="166" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d">✓</text>
+  <text x="466" y="167" font-size="13" font-weight="600" fill="#1e293b">Huawei Ascend chips</text>
+  <text x="466" y="182" font-size="11.5" fill="#64748b">Domestic alternative gaining traction</text>
+
+  <!-- Item 2 -->
+  <rect x="438" y="194" width="18" height="18" rx="4" fill="#86efac"/>
+  <text x="447" y="206" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d">✓</text>
+  <text x="466" y="207" font-size="13" font-weight="600" fill="#1e293b">GLM-5: trained on Ascend</text>
+  <text x="466" y="222" font-size="11.5" fill="#64748b">First frontier model on domestic silicon</text>
+
+  <!-- Item 3 -->
+  <rect x="438" y="234" width="18" height="18" rx="4" fill="#86efac"/>
+  <text x="447" y="246" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d">✓</text>
+  <text x="466" y="247" font-size="13" font-weight="600" fill="#1e293b">DeepSeek V4 Ascend-optimized</text>
+  <text x="466" y="262" font-size="11.5" fill="#64748b">73% compute reduction claimed</text>
+
+  <!-- Key fact box — right -->
+  <rect x="438" y="275" width="330" height="52" rx="7" fill="#dcfce7" stroke="#86efac" stroke-width="1.2"/>
+  <text x="453" y="293" font-size="11.5" font-weight="700" fill="#14532d">Key fact:</text>
+  <text x="453" y="308" font-size="11.5" fill="#14532d">GLM-5 is the first frontier model trained</text>
+  <text x="453" y="322" font-size="11.5" fill="#14532d">start-to-finish on domestic Chinese silicon</text>
+
+  <!-- Placeholder for right column note alignment -->
+  <text x="438" y="346" font-size="11" fill="#15803d" font-style="italic">Inference workloads can run on Ascend at</text>
+  <text x="438" y="360" font-size="11" fill="#15803d" font-style="italic">commercial scale today</text>
+
+  <!-- ===== BOTTOM CALLOUT ===== -->
+  <rect x="20" y="415" width="760" height="52" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="400" y="437" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1e293b">The chip fight happens before a model ships.</text>
+  <text x="400" y="456" text-anchor="middle" font-size="12" fill="#64748b">The fight that decides who wins happens after — wherever models get deployed.</text>
+
+</svg>

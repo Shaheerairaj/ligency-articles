@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="420" viewBox="0 0 800 420">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Overall background -->
+  <rect width="800" height="420" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="400" y="36" text-anchor="middle" font-size="17" font-weight="600" fill="#1e293b">Dense attention vs sparse attention</text>
+
+  <!-- Subtitle -->
+  <text x="400" y="56" text-anchor="middle" font-size="11.5" fill="#64748b">In dense attention, every token looks at every other token. Sparse attention skips most pairs — only computes the ones that matter. Long inputs stay cheap.</text>
+
+  <!-- ─────────────── LEFT PANEL: Dense ─────────────── -->
+  <rect x="20" y="72" width="360" height="240" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2"/>
+
+  <!-- Panel label -->
+  <text x="200" y="96" text-anchor="middle" font-size="13" font-weight="600" fill="#1e293b">Dense attention</text>
+  <text x="200" y="112" text-anchor="middle" font-size="11" fill="#94a3b8">all pairs computed</text>
+
+  <!-- Token positions (dense): 8 tokens, x: 60,100,140,180,220,260,300,340, y=148 -->
+  <!-- Connection lines first (drawn behind tokens) -->
+  <!-- All 28 pairs for n=8 -->
+  <!-- Row 0 (token 0 at x=60) connects to tokens 1-7 -->
+  <line x1="60" y1="148" x2="100" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="60" y1="148" x2="140" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="60" y1="148" x2="180" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="60" y1="148" x2="220" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="60" y1="148" x2="260" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="60" y1="148" x2="300" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="60" y1="148" x2="340" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+
+  <!-- token 1 connects to 2-7 -->
+  <line x1="100" y1="148" x2="140" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="100" y1="148" x2="180" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="100" y1="148" x2="220" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="100" y1="148" x2="260" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="100" y1="148" x2="300" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="100" y1="148" x2="340" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+
+  <!-- token 2 connects to 3-7 -->
+  <line x1="140" y1="148" x2="180" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="140" y1="148" x2="220" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="140" y1="148" x2="260" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="140" y1="148" x2="300" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="140" y1="148" x2="340" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+
+  <!-- token 3 connects to 4-7 -->
+  <line x1="180" y1="148" x2="220" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="180" y1="148" x2="260" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="180" y1="148" x2="300" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="180" y1="148" x2="340" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+
+  <!-- token 4 connects to 5-7 -->
+  <line x1="220" y1="148" x2="260" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="220" y1="148" x2="300" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="220" y1="148" x2="340" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+
+  <!-- token 5 connects to 6-7 -->
+  <line x1="260" y1="148" x2="300" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+  <line x1="260" y1="148" x2="340" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+
+  <!-- token 6 connects to 7 -->
+  <line x1="300" y1="148" x2="340" y2="148" stroke="#cbd5e1" stroke-width="0.8"/>
+
+  <!-- Now draw the arcs below tokens to make a web shape -->
+  <!-- Arcs connecting tokens below the row (curved lines) -->
+  <path d="M 60 148 Q 80 190 100 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 60 148 Q 100 210 140 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 60 148 Q 120 230 180 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 60 148 Q 140 250 220 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 60 148 Q 160 270 260 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 60 148 Q 180 285 300 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 60 148 Q 200 298 340 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+
+  <path d="M 100 148 Q 120 190 140 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 100 148 Q 140 210 180 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 100 148 Q 160 230 220 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 100 148 Q 180 250 260 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 100 148 Q 200 270 300 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 100 148 Q 220 285 340 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+
+  <path d="M 140 148 Q 160 190 180 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 140 148 Q 180 210 220 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 140 148 Q 200 230 260 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 140 148 Q 220 250 300 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 140 148 Q 240 268 340 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+
+  <path d="M 180 148 Q 200 190 220 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 180 148 Q 220 210 260 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 180 148 Q 240 230 300 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 180 148 Q 260 250 340 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+
+  <path d="M 220 148 Q 240 190 260 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 220 148 Q 260 210 300 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 220 148 Q 280 230 340 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+
+  <path d="M 260 148 Q 280 190 300 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+  <path d="M 260 148 Q 300 210 340 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+
+  <path d="M 300 148 Q 320 190 340 148" stroke="#cbd5e1" stroke-width="0.8" fill="none"/>
+
+  <!-- Dense tokens (filled circles) -->
+  <circle cx="60"  cy="148" r="10" fill="#0f172a"/>
+  <circle cx="100" cy="148" r="10" fill="#0f172a"/>
+  <circle cx="140" cy="148" r="10" fill="#0f172a"/>
+  <circle cx="180" cy="148" r="10" fill="#0f172a"/>
+  <circle cx="220" cy="148" r="10" fill="#0f172a"/>
+  <circle cx="260" cy="148" r="10" fill="#0f172a"/>
+  <circle cx="300" cy="148" r="10" fill="#0f172a"/>
+  <circle cx="340" cy="148" r="10" fill="#0f172a"/>
+
+  <!-- Dense count annotation -->
+  <text x="200" y="328" text-anchor="middle" font-size="13" font-weight="600" fill="#1e293b">28 pairs computed</text>
+
+  <!-- ─────────────── RIGHT PANEL: Sparse ─────────────── -->
+  <rect x="420" y="72" width="360" height="240" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/>
+
+  <!-- Panel label -->
+  <text x="600" y="96" text-anchor="middle" font-size="13" font-weight="600" fill="#1e293b">Sparse attention</text>
+  <text x="600" y="112" text-anchor="middle" font-size="11" fill="#94a3b8">selective pairs only</text>
+
+  <!-- Sparse token positions: x: 460,500,540,580,620,660,700,740, y=148 -->
+  <!-- Sparse connections: adjacent (7) + 2-apart (6) + long-range 1↔8, 2↔7, 3↔6 -->
+  <!-- Selective ~8 pairs as described: nearby + specific long-range -->
+
+  <!-- Adjacent pairs (tokens 1-2, 2-3, 3-4, 4-5, 5-6, 6-7, 7-8) -->
+  <path d="M 460 148 Q 480 172 500 148" stroke="#dc2626" stroke-width="1.2" fill="none"/>
+  <path d="M 500 148 Q 520 172 540 148" stroke="#dc2626" stroke-width="1.2" fill="none"/>
+  <path d="M 540 148 Q 560 172 580 148" stroke="#dc2626" stroke-width="1.2" fill="none"/>
+  <path d="M 580 148 Q 600 172 620 148" stroke="#dc2626" stroke-width="1.2" fill="none"/>
+  <path d="M 620 148 Q 640 172 660 148" stroke="#dc2626" stroke-width="1.2" fill="none"/>
+
+  <!-- Long-range connections: token 1↔8 (460↔740), token 2↔7 (500↔700), token 3↔6 (540↔660) -->
+  <path d="M 460 148 Q 600 258 740 148" stroke="#dc2626" stroke-width="1.2" fill="none"/>
+  <path d="M 500 148 Q 600 238 700 148" stroke="#dc2626" stroke-width="1.2" fill="none"/>
+  <path d="M 540 148 Q 600 218 660 148" stroke="#dc2626" stroke-width="1.2" fill="none"/>
+
+  <!-- Sparse tokens (red filled circles) -->
+  <circle cx="460" cy="148" r="10" fill="#dc2626"/>
+  <circle cx="500" cy="148" r="10" fill="#dc2626"/>
+  <circle cx="540" cy="148" r="10" fill="#dc2626"/>
+  <circle cx="580" cy="148" r="10" fill="#dc2626"/>
+  <circle cx="620" cy="148" r="10" fill="#dc2626"/>
+  <circle cx="660" cy="148" r="10" fill="#dc2626"/>
+  <circle cx="700" cy="148" r="10" fill="#dc2626"/>
+  <circle cx="740" cy="148" r="10" fill="#dc2626"/>
+
+  <!-- Sparse count annotation -->
+  <text x="600" y="328" text-anchor="middle" font-size="13" font-weight="600" fill="#dc2626">~8 pairs computed</text>
+
+  <!-- ─────────────── Result callouts ─────────────── -->
+  <rect x="20" y="358" width="360" height="44" rx="8" fill="#f1f5f9"/>
+  <text x="200" y="376" text-anchor="middle" font-size="11.5" fill="#1e293b" font-weight="500">Dense: cost grows quadratically</text>
+  <text x="200" y="393" text-anchor="middle" font-size="11.5" fill="#64748b">with context length</text>
+
+  <rect x="420" y="358" width="360" height="44" rx="8" fill="#fef2f2"/>
+  <text x="600" y="376" text-anchor="middle" font-size="11.5" fill="#1e293b" font-weight="500">Sparse: cost grows much more slowly</text>
+  <text x="600" y="393" text-anchor="middle" font-size="11.5" fill="#64748b">long documents stay fast</text>
+</svg>

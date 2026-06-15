@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif;">
+  <rect width="800" height="380" fill="#fff"/>
+
+  <text x="40" y="34" font-size="17" font-weight="600" fill="#1e293b">Hallucination rate on AA-Omniscience</text>
+  <text x="40" y="54" font-size="12" fill="#64748b">Share of questions where the model fabricates an answer — lower is better</text>
+
+  <!-- Vertical grid lines at 0 25 50 75 100 -->
+  <!-- bar area: x=220..740, scale=5.2px per % -->
+  <line x1="220" y1="72" x2="220" y2="255" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="350" y1="72" x2="350" y2="255" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="480" y1="72" x2="480" y2="255" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="610" y1="72" x2="610" y2="255" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="740" y1="72" x2="740" y2="255" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="220" y1="255" x2="740" y2="255" stroke="#cbd5e1" stroke-width="1"/>
+
+  <!-- Bar 1: DeepSeek V4 Pro 94% → width=489 -->
+  <text x="212" y="103" font-size="13" fill="#1e293b" text-anchor="end">DeepSeek V4 Pro</text>
+  <rect x="220" y="80" width="489" height="38" fill="#dc2626" rx="3"/>
+  <text x="716" y="104" font-size="13" font-weight="700" fill="#dc2626">94%</text>
+
+  <!-- Bar 2: Kimi K2.6 ~39% → width=203 -->
+  <text x="212" y="162" font-size="13" fill="#1e293b" text-anchor="end">Kimi K2.6</text>
+  <rect x="220" y="139" width="203" height="38" fill="#dc2626" rx="3" opacity="0.45"/>
+  <text x="430" y="163" font-size="13" font-weight="700" fill="#9b1c1c">~39%</text>
+  <text x="431" y="178" font-size="10" fill="#94a3b8">(down from 64.6% in prior version)</text>
+
+  <!-- Bar 3: Claude Opus 4.8 36% → width=187 -->
+  <text x="212" y="221" font-size="13" fill="#1e293b" text-anchor="end">Claude Opus 4.8</text>
+  <rect x="220" y="198" width="187" height="38" fill="#0f172a" rx="3"/>
+  <text x="414" y="222" font-size="13" font-weight="700" fill="#0f172a">36%</text>
+
+  <!-- X axis labels -->
+  <text x="220" y="272" font-size="11" fill="#94a3b8" text-anchor="middle">0%</text>
+  <text x="350" y="272" font-size="11" fill="#94a3b8" text-anchor="middle">25%</text>
+  <text x="480" y="272" font-size="11" fill="#94a3b8" text-anchor="middle">50%</text>
+  <text x="610" y="272" font-size="11" fill="#94a3b8" text-anchor="middle">75%</text>
+  <text x="740" y="272" font-size="11" fill="#94a3b8" text-anchor="middle">100%</text>
+
+  <!-- Legend -->
+  <rect x="220" y="298" width="12" height="12" fill="#dc2626" rx="2"/>
+  <text x="238" y="309" font-size="12" fill="#64748b">Chinese open model</text>
+  <rect x="420" y="298" width="12" height="12" fill="#0f172a" rx="2"/>
+  <text x="438" y="309" font-size="12" fill="#64748b">Closed model (Anthropic)</text>
+
+  <text x="40" y="358" font-size="10" fill="#94a3b8">Source: Artificial Analysis AA-Omniscience benchmark.</text>
+</svg>

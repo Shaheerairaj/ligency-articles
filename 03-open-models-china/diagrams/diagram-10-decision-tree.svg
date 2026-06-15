@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="560" viewBox="0 0 800 560">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    .title { font-size: 16px; font-weight: 700; fill: #0f172a; }
+    .node-label { font-size: 13px; font-weight: 600; fill: #0f172a; }
+    .node-label-red { font-size: 13px; font-weight: 600; fill: #dc2626; }
+    .node-label-blue { font-size: 13px; font-weight: 600; fill: #2563eb; }
+    .node-label-white { font-size: 13px; font-weight: 600; fill: #ffffff; }
+    .note { font-size: 10px; fill: #64748b; }
+    .note-red { font-size: 10px; fill: #b91c1c; }
+    .branch-label { font-size: 11px; fill: #94a3b8; font-style: italic; }
+    .source { font-size: 10px; fill: #94a3b8; }
+    .yes-no { font-size: 11px; fill: #64748b; font-weight: 600; }
+  </style>
+
+  <!-- White background -->
+  <rect width="800" height="560" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" class="title">Which open model fits your use case?</text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- ROOT NODE: "What matters most?" -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <rect x="280" y="50" width="240" height="44" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="400" y="77" text-anchor="middle" class="node-label">What matters most?</text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- CONNECTOR: root down to horizontal spine -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <line x1="400" y1="94" x2="400" y2="116" stroke="#94a3b8" stroke-width="1.5"/>
+  <!-- Horizontal spine: from x=80 to x=720, y=116 -->
+  <line x1="80" y1="116" x2="720" y2="116" stroke="#94a3b8" stroke-width="1.5"/>
+
+  <!-- Vertical drops from spine to branch labels -->
+  <!-- Branch 1: x=80 -->
+  <line x1="80" y1="116" x2="80" y2="148" stroke="#94a3b8" stroke-width="1.5"/>
+  <!-- Branch 2: x=226 -->
+  <line x1="226" y1="116" x2="226" y2="148" stroke="#94a3b8" stroke-width="1.5"/>
+  <!-- Branch 3: x=400 -->
+  <line x1="400" y1="116" x2="400" y2="148" stroke="#94a3b8" stroke-width="1.5"/>
+  <!-- Branch 4: x=574 -->
+  <line x1="574" y1="116" x2="574" y2="148" stroke="#94a3b8" stroke-width="1.5"/>
+  <!-- Branch 5: x=720 -->
+  <line x1="720" y1="116" x2="720" y2="148" stroke="#94a3b8" stroke-width="1.5"/>
+
+  <!-- Branch labels -->
+  <text x="80" y="146" text-anchor="middle" class="branch-label">Cost</text>
+  <text x="226" y="146" text-anchor="middle" class="branch-label">Agentic coding</text>
+  <text x="400" y="138" text-anchor="middle" class="branch-label">Model variety /</text>
+  <text x="400" y="150" text-anchor="middle" class="branch-label">fine-tuning</text>
+  <text x="574" y="138" text-anchor="middle" class="branch-label">Trust /</text>
+  <text x="574" y="150" text-anchor="middle" class="branch-label">compliance</text>
+  <text x="720" y="146" text-anchor="middle" class="branch-label">Reliability above all</text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- BRANCH 1: Cost → DeepSeek V4-Flash -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <line x1="80" y1="156" x2="80" y2="192" stroke="#94a3b8" stroke-width="1.5"/>
+  <!-- Leaf node -->
+  <rect x="12" y="192" width="136" height="40" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="80" y="210" text-anchor="middle" class="node-label-red">DeepSeek</text>
+  <text x="80" y="224" text-anchor="middle" class="node-label-red">V4-Flash</text>
+  <!-- Note below -->
+  <text x="80" y="248" text-anchor="middle" class="note-red">$0.28/M tokens.</text>
+  <text x="80" y="260" text-anchor="middle" class="note-red">Best for high-volume</text>
+  <text x="80" y="272" text-anchor="middle" class="note-red">pipelines.</text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- BRANCH 2: Agentic coding → Kimi K2.6 -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <line x1="226" y1="156" x2="226" y2="192" stroke="#94a3b8" stroke-width="1.5"/>
+  <!-- Leaf node -->
+  <rect x="158" y="192" width="136" height="40" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="226" y="210" text-anchor="middle" class="node-label-red">Kimi K2.6</text>
+  <text x="226" y="224" text-anchor="middle" class="node-label-red">(Moonshot AI)</text>
+  <!-- Note below -->
+  <text x="226" y="248" text-anchor="middle" class="note-red">300-subagent swarm.</text>
+  <text x="226" y="260" text-anchor="middle" class="note-red">Caveat: top scores</text>
+  <text x="226" y="272" text-anchor="middle" class="note-red">self-reported.</text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- BRANCH 3: Model variety / fine-tuning → Qwen -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <line x1="400" y1="156" x2="400" y2="192" stroke="#94a3b8" stroke-width="1.5"/>
+  <!-- Leaf node -->
+  <rect x="332" y="192" width="136" height="40" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="400" y="210" text-anchor="middle" class="node-label-red">Qwen</text>
+  <text x="400" y="224" text-anchor="middle" class="node-label-red">(Alibaba)</text>
+  <!-- Note below -->
+  <text x="400" y="248" text-anchor="middle" class="note-red">113K+ derivatives.</text>
+  <text x="400" y="260" text-anchor="middle" class="note-red">Best small-model</text>
+  <text x="400" y="272" text-anchor="middle" class="note-red">selection.</text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- BRANCH 4: Trust / compliance → decision node "Chinese OK?" -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <line x1="574" y1="156" x2="574" y2="192" stroke="#94a3b8" stroke-width="1.5"/>
+  <!-- Decision node -->
+  <rect x="506" y="192" width="136" height="40" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="574" y="210" text-anchor="middle" class="node-label">Chinese OK?</text>
+  <text x="574" y="224" text-anchor="middle" style="font-size:11px; fill:#64748b;">(legal / data residency)</text>
+
+  <!-- Line down from decision node -->
+  <line x1="574" y1="232" x2="574" y2="272" stroke="#94a3b8" stroke-width="1.5"/>
+  <!-- Horizontal split: left to x=506, right to x=642 -->
+  <line x1="506" y1="272" x2="642" y2="272" stroke="#94a3b8" stroke-width="1.5"/>
+  <!-- Down to Yes leaf: x=506 -->
+  <line x1="506" y1="272" x2="506" y2="306" stroke="#94a3b8" stroke-width="1.5"/>
+  <!-- Down to No leaf: x=642 -->
+  <line x1="642" y1="272" x2="642" y2="306" stroke="#94a3b8" stroke-width="1.5"/>
+
+  <!-- Yes / No labels -->
+  <text x="524" y="290" text-anchor="middle" class="yes-no">Yes</text>
+  <text x="626" y="290" text-anchor="middle" class="yes-no">No</text>
+
+  <!-- Yes leaf -->
+  <rect x="438" y="306" width="136" height="40" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="506" y="322" text-anchor="middle" class="node-label-red">Any Chinese</text>
+  <text x="506" y="336" text-anchor="middle" class="node-label-red">open model</text>
+
+  <!-- No leaf -->
+  <rect x="574" y="306" width="136" height="40" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="642" y="319" text-anchor="middle" class="node-label-blue">Nemotron 3 Ultra</text>
+  <text x="642" y="333" text-anchor="middle" class="node-label-blue">or gpt-oss</text>
+  <!-- Note below No leaf -->
+  <text x="642" y="360" text-anchor="middle" style="font-size:10px; fill:#1d4ed8;">US open weights.</text>
+  <text x="642" y="372" text-anchor="middle" style="font-size:10px; fill:#1d4ed8;">No PRC data exposure.</text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- BRANCH 5: Reliability above all → Closed model -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <line x1="720" y1="156" x2="720" y2="192" stroke="#94a3b8" stroke-width="1.5"/>
+  <!-- Leaf node -->
+  <rect x="652" y="192" width="136" height="40" rx="8" fill="#1e293b" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="720" y="210" text-anchor="middle" class="node-label-white">Closed model</text>
+  <text x="720" y="224" text-anchor="middle" style="font-size:11px; fill:#94a3b8;">Claude Opus / GPT-5.5</text>
+  <!-- Note below -->
+  <text x="720" y="248" text-anchor="middle" class="note">Best for production</text>
+  <text x="720" y="260" text-anchor="middle" class="note">reliability and</text>
+  <text x="720" y="272" text-anchor="middle" class="note">agent loops.</text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- Legend -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <rect x="20" y="430" width="14" height="14" rx="3" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="40" y="442" class="note" style="fill:#374151;">Chinese open weights</text>
+
+  <rect x="160" y="430" width="14" height="14" rx="3" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="180" y="442" class="note" style="fill:#374151;">US open weights</text>
+
+  <rect x="300" y="430" width="14" height="14" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="320" y="442" class="note" style="fill:#374151;">Closed / proprietary</text>
+
+  <rect x="460" y="430" width="14" height="14" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="480" y="442" class="note" style="fill:#374151;">Decision node</text>
+
+  <!-- Source note -->
+  <text x="400" y="540" text-anchor="middle" class="source">Based on article analysis, June 2026.</text>
+
+  <!-- Horizontal rule above source -->
+  <line x1="20" y1="460" x2="780" y2="460" stroke="#e2e8f0" stroke-width="1"/>
+</svg>

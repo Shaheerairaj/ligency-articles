@@ -17,9 +17,13 @@ The question now is whether these open models are actually as good as the closed
 
 The numbers worth trusting come from independent scorers, not the labs' own marketing. Artificial Analysis publishes an intelligence index, a combination of reasoning, math, code, and knowledge evals rolled into one 0-to-100 score. As of June 2026 the top open-weight model, Moonshot's Kimi K2.6, sits at 54. The closed leaders, Claude Opus 4.8 and GPT-5.5, sit at 61 and 60. A 6 to 7 point spread.
 
+![AA Intelligence Index: best open vs best closed model, 2025–2026](diagrams/diagram-01-aa-index.svg)
+
 When K2.6 launched in April that gap was only about 3 points, the closed leaders were at 57. Then the frontier moved up and the open top caught the old number. That's the pattern Nathan Lambert (Interconnects, the closest thing this space has to a sober scorekeeper) keeps flagging: the lag holds steady at roughly six months. Both sides improve, the distance barely moves. "Catching up" is the trajectory of any fast-follower, and so far, that's all it's been.
 
 I should note though that this index also helps open models in a way. It's an average across those categories and it doesn't tell you about model reliability in production which is a key metric that frontier models excel in. On AA-Omniscience, DeepSeek V4 Pro hallucinates on about 94% of the questions asked. Claude Opus 4.8 sits near 36%. That's not a six-point gap like we saw previously, it's a whole different story and really impacts trust in a model in production. K2.6 cut its own rate to ~39% from 64.6% a version earlier, so it compares a little better. Open models are jagged. Great at code, shaky on tool use; strong reasoning, makes things up. You can usually find one that beats a closed model on your task. No open model is good at everything the way a closed flagship is, though, not yet. So companies that go open often run several, each fine-tuned to its own data and tasks. And the strongest open models are largely distilled on the strongest closed APIs. I don't think the gap ever closes, to be honest. Open narrowed it mostly through distillation, and as long as you're distilling from the frontier, your ceiling will always be the frontier.
+
+![AA-Omniscience hallucination rates: DeepSeek V4 Pro vs Kimi K2.6 vs Claude Opus 4.8](diagrams/diagram-02-hallucination.svg)
 
 DeepSeek-R1 was the spark, the early-2025 release that proved a lean Chinese lab could ship an open reasoning model competitive on math and code. That's the origin story but not the whole picture. R1 is nearly a historical artifact and the action moved to a dozen labs doing something more deliberate than a one-off shock. The rest of this piece is that: the playbook, the numbers behind it, which model you'd actually pick for what, and why the whole arrangement might not last.
 
@@ -29,11 +33,15 @@ Before picking a model it helps to be honest about both sides, because the open-
 
 Let's start with what's good and most of it is money. DeepSeek V4 runs about $3.48 per million output tokens, and its smaller, cheaper V4-Flash tier drops to $0.28. The closed flagships sit around $25 (Claude Opus 4.8) and $30 (GPT-5.5) for the same million tokens. It's a different order of magnitude in terms of cost, and for anything high-volume and price-sensitive (extraction, agent loops and tool calls that burn tokens by the millions) it changes what's economically worth doing at all for many companies trying to adopt AI.
 
+![API cost per million output tokens](diagrams/diagram-03-pricing.svg)
+
 Then there is control. You have the weights, so you can run the model on your own hardware or in a private cloud, fine-tune it on your data, quantize it (shrink the numbers it stores to a lower precision so it fits a smaller GPU), and never send a customer record to someone else's API. That's a dream outcome for regulated industries and for governments. Singapore picked Qwen over Llama for national work, Malaysia's sovereign stack runs on DeepSeek, Airbnb uses Qwen for parts of its support, and Cursor built features on Moonshot's Kimi. By an a16z estimate, roughly 16 to 24% of US startups now build on Chinese base models (the figure you'll see quoted as "80%" is really 80% of the subset that uses open source at all, not 80% of everyone).
 
 And the stuff diffuses fast. Qwen alone has more than 113,000 derivative models on Hugging Face, more than Google's and Meta's open releases COMBINED. A strong model drops on a Monday and by the weekend there are quantized builds, fine-tunes, and inference-provider listings for it.
 
 So what negatives come along with them? The first catch hides in the word "open." Almost all of these releases are weights-only: you get the model files, not the training data, the data filters, or the recipe to reproduce it. Truly-open models (weights plus data plus training code) are getting rarer. The share of model downloads that shipped with disclosed training data fell from 79.3% in 2022 to 39% in 2025 (according to the "Economies of Open Intelligence" paper on arXiv), and weights-only releases passed truly-open ones for the first time. So "open-source AI" usually means free to run, not open to inspect.
+
+![Training data disclosure rate, 2021–2026. Source: "Economies of Open Intelligence," arXiv 2512.03073](diagrams/diagram-04-openness-trend.png)
 
 Second, a launch-day benchmark is marketing until someone independent re-runs it. MiniMax M3 is the cautionary tale. It launched claiming 59.0% on SWE-bench Pro and a win over GPT-5.5, except every figure was measured on MiniMax's own infrastructure, the independent evals weren't in yet, and the open weights weren't even released on the day. It also compared itself to the older Opus 4.7. Opus 4.8 actually beats it, 69.2% to 59.0%. Grading your own homework, basically.
 
@@ -57,11 +65,15 @@ GLM-5 came out of Zhipu (also branded Z.ai) on February 11, and the notable thin
 
 It also borrows a method DeepSeek published called sparse attention. Normally every token in the context has to attend to every other token, which gets expensive fast as the input grows long; sparse attention skips most of those comparisons and only computes the ones that are actually useful, so long inputs stay cheap to run.
 
+![Dense attention vs sparse attention](diagrams/diagram-06-sparse-attention.svg)
+
 Xiaomi MiMo-V2.5-Pro. A phone company's model ties with Kimi for the top open-weight spot on the Artificial Analysis index, both sitting at 54. A lab nobody had in the frontier conversation a year ago is now tied for first. It's hard to keep calling this a two-lab race after that.
 
 Be careful with MiniMax M3, for the benchmark reasons I covered earlier. The lab is here for a different reason anyway. MiniMax went public in Hong Kong in January 2026 and the stock doubled on its first day of trading. Even with the model's own benchmark claims still unconfirmed, investors doubled the company's value in a day, which tells you how much money is chasing these labs right now.
 
 So the "DeepSeek and Qwen" headline is a 2025 story. Mid-2026 is roughly ten serious labs (add StepFun and a few others to the six above), each strong at something different. No single one is best at everything. Four labs lead four different things, which is exactly what makes the "which one should I use" question a genuinely hard one to answer.
+
+![Chinese open-weight labs: mid-2026 snapshot](diagrams/diagram-05-lab-comparison.svg)
 
 ## 4. Why give the model away
 
@@ -81,6 +93,8 @@ The second is price, set deliberately low as a tactic. DeepSeek V4 runs $3.48 pe
 
 It's working, at least on the usage signals. On OpenRouter, Chinese open models now move about 45% of all token volume, up from under 2% a year ago. On Hugging Face they're 41% of downloads, the largest share of any country. Both numbers come with an asterisk. The "61%" you'll see quoted is only the top-10 slice of OpenRouter, not the whole platform, and across the wider traffic, roughly 100 trillion tokens, the Chinese open share is closer to 30%, with Western proprietary models still taking about 70% of global API spend. So they're winning attention and mindshare. They are not yet winning the money.
 
+![Token usage by source type, Oct 2024–Nov 2025. Source: OpenRouter State of AI 2025](diagrams/diagram-07-openrouter-volume.png)
+
 Which raises the obvious question: why pour a fortune into a model and then give it away? Advertising is part of it, since every fine-tune and derivative of the original model spreads it further. But the bigger reason, per the USCC's "two loops" report, is strategy. A Chinese lab cut off from the best Nvidia chips is short on compute. An open-weights release hands the model to the whole world, and every developer who runs it, reports a bug, or fine-tunes it is doing work the lab would otherwise burn its own compute on. China's openness strategy buys back some of the progress the export controls were meant to block.
 
 So the labs aren't ahead because their models are better. As I said up top, they lag the frontier by a steady few points. They're ahead because they treated the release as the campaign and the model as the ad, and almost nobody on the closed side was playing that game until very recently with OpenAI's gpt-oss.
@@ -90,6 +104,8 @@ So the labs aren't ahead because their models are better. As I said up top, they
 Everything so far has been about the models themselves, how good they are and what they cost. The mid-2026 news has mostly been about the layer underneath: the chips they run on, the lawsuits over how they were trained, and whether a Western company can trust them at all.
 
 Start with chips, the biggest shift. DeepSeek V4 was optimized to run inference on Huawei's Ascend hardware, reportedly at Beijing's nudging, with claimed cuts of 73% to inference compute and 90% to the KV cache (the memory a model uses to hold a conversation's context, which balloons as the context gets longer). Huawei announced full Ascend support, and GLM-5 was trained on Ascend end to end. The catch is that running a finished model and training one in the first place are two different jobs, and China's chip independence is much further along on the running side. US officials say V4 was still trained on smuggled Nvidia Blackwell chips, and DeepSeek itself admitted it can't yet serve V4-Pro at scale because it doesn't have enough hardware. So the move off Nvidia is real for running models and still aspirational for training them.
+
+![China's chip independence: training vs inference](diagrams/diagram-08-chip-supply.svg)
 
 The second thing is trust, and for most Western companies it matters more than capability. China's National Intelligence Law requires Chinese companies to "support, assist, and cooperate with" state intelligence. If you're running the open-weight models on your hardware that is less of a concern. The hosted APIs are a different matter, and so is the content filtering and political slant trained into the model itself. It's the concern that comes up in every enterprise deal, and no benchmark score can make up for that.
 
@@ -103,6 +119,10 @@ This is the section you probably came for, so here's the short version first: th
 
 Start with raw capability, since that's what people reach for first. On the Artificial Analysis index, the open frontier is bunched tight. Kimi K2.6 and Xiaomi MiMo-V2.5-Pro both sit at 54, DeepSeek V4 Pro at 52, GLM-5 at 51. The closed leaders sit clear above them, GPT-5.5 at 60 and Opus 4.8 at 61. You won't find Qwen3.7 Max on the open list even though it scores well, because Alibaba kept it closed. And the order changes depending on the scoreboard. BenchLM, which weights things differently, puts DeepSeek V4 Pro on top at 87, then Kimi at 84, then GLM at 83. So which model is "number one" depends mostly on whose scoreboard you're reading.
 
+![AA Intelligence Index: US open vs Chinese open vs closed, June 2026](diagrams/diagram-11-us-china-scores.svg)
+
+![Price vs capability: open and closed models](diagrams/diagram-09-scatter.svg)
+
 Here's how it breaks down by use case:
 
 - Cheapest, for high-volume automation: DeepSeek. Nothing else is close on price (the $3.48, and $0.28 on the Flash tier).
@@ -111,6 +131,8 @@ Here's how it breaks down by use case:
 - Top raw benchmark score: GLM-5 or DeepSeek V4 Pro, depending on which scoreboard you trust.
 - Most historically important: DeepSeek-R1, now the most-liked model in Hugging Face history, the one that started all of this.
 - Best for an actual production deployment: usually none of the above. The model that wins in production is the cheap, stable, well-served, permissively-licensed one in the size you need, not the one at the top of the chart. But honestly, it's a risky bet to use any of these in production without fine-tuning, guardrails and constraints to specific tasks.
+
+![Which open model fits your use case?](diagrams/diagram-10-decision-tree.svg)
 
 The benchmark leader and the right production choice are often different models, because in production you care about latency, cost, uptime, license terms, and how well your provider actually serves the thing.
 
@@ -137,6 +159,8 @@ Releasing open weights wins developers and accelerates technological advancement
 The cloud and enterprise revenue is supposed to arrive later for China, but the same distribution strategy that won all those developers (releasing fast and pricing low) also created a market where a dozen labs are racing each other to the bottom on price. It's not clear who turns that attention into a proper business, and Nathan Lambert (Interconnects) thinks the Chinese open-weight labs run into funding trouble before the US ones do, maybe as soon as late 2026.
 
 That's already showing up in how labs are behaving. Qwen3.7 Max, Alibaba's flagship, shipped closed, with only the smaller tiers as open models. Z.ai has started releasing some models closed-first and raising prices. Reuters has written about the "open-source dilemma" these labs are in: the open releases built the mindshare, but cloud bills are no joke and investors want returns. The model that made them famous is the one they can least afford to keep giving away.
+
+![Key events in the Chinese open-model story, 2025–2026](diagrams/diagram-12-timeline.svg)
 
 What stops everyone from closing up all their models at once is a standoff that the Chinese labs have put themselves in. As long as one capable lab keeps shipping open weights, the others can't fully close without handing the whole open market to that competitor. So the models stay open, for now. Whichever lab closes first loses its developer base to whoever doesn't.
 

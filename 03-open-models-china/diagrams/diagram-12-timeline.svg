@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460" width="800" height="460" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+
+  <!-- Background -->
+  <rect width="800" height="460" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="400" y="32" text-anchor="middle" font-size="14" font-weight="600" fill="#1e293b">Key events in the Chinese open-model story, 2025–2026</text>
+
+  <!-- Timeline axis line -->
+  <line x1="60" y1="220" x2="755" y2="220" stroke="#94a3b8" stroke-width="2"/>
+
+  <!-- Axis arrow -->
+  <polygon points="755,215 765,220 755,225" fill="#94a3b8"/>
+
+  <!-- Axis tick marks and labels -->
+  <!-- Jan 2025 -->
+  <line x1="80" y1="215" x2="80" y2="225" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="80" y="240" text-anchor="middle" font-size="10" fill="#64748b">Jan 2025</text>
+
+  <!-- Jun 2025 -->
+  <line x1="210" y1="215" x2="210" y2="225" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="210" y="240" text-anchor="middle" font-size="10" fill="#64748b">Jun 2025</text>
+
+  <!-- Jan 2026 -->
+  <line x1="400" y1="215" x2="400" y2="225" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="400" y="240" text-anchor="middle" font-size="10" fill="#64748b">Jan 2026</text>
+
+  <!-- Jun 2026 -->
+  <line x1="570" y1="215" x2="570" y2="225" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="570" y="240" text-anchor="middle" font-size="10" fill="#64748b">Jun 2026</text>
+
+  <!-- Dec 2026 -->
+  <line x1="720" y1="215" x2="720" y2="225" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="720" y="240" text-anchor="middle" font-size="10" fill="#94a3b8">Dec 2026</text>
+
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- ABOVE-LINE EVENTS -->
+  <!-- ═══════════════════════════════════════════════ -->
+
+  <!-- 1. Jan 2025: DeepSeek-R1 shock (x=80, above) -->
+  <!-- connector -->
+  <line x1="80" y1="212" x2="80" y2="148" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="80" y1="148" x2="26" y2="148" stroke="#cbd5e1" stroke-width="1"/>
+  <!-- dot -->
+  <circle cx="80" cy="220" r="8" fill="#2563eb"/>
+  <!-- label box region -->
+  <text x="24" y="112" font-size="11" font-weight="600" fill="#1e293b" text-anchor="start">DeepSeek-R1</text>
+  <text x="24" y="126" font-size="11" font-weight="600" fill="#1e293b" text-anchor="start">shock</text>
+  <text x="24" y="141" font-size="9.5" fill="#64748b" text-anchor="start">First Chinese open</text>
+  <text x="24" y="153" font-size="9.5" fill="#64748b" text-anchor="start">reasoning model to</text>
+  <text x="24" y="165" font-size="9.5" fill="#64748b" text-anchor="start">compete on math/code</text>
+
+  <!-- 2. Aug 2025: OpenAI gpt-oss (x=260, above) -->
+  <line x1="260" y1="212" x2="260" y2="90" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="260" y1="90" x2="200" y2="90" stroke="#cbd5e1" stroke-width="1"/>
+  <circle cx="260" cy="220" r="8" fill="#2563eb"/>
+  <text x="198" y="58" font-size="11" font-weight="600" fill="#1e293b" text-anchor="start">OpenAI gpt-oss</text>
+  <text x="198" y="72" font-size="9.5" fill="#64748b" text-anchor="start">US labs begin returning</text>
+  <text x="198" y="84" font-size="9.5" fill="#64748b" text-anchor="start">to open weights</text>
+
+  <!-- 3. Feb 11, 2026: GLM-5 (x=418, above) -->
+  <line x1="418" y1="212" x2="418" y2="120" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="418" y1="120" x2="358" y2="120" stroke="#cbd5e1" stroke-width="1"/>
+  <circle cx="418" cy="220" r="8" fill="#dc2626"/>
+  <text x="356" y="88" font-size="11" font-weight="600" fill="#1e293b" text-anchor="start">GLM-5 released</text>
+  <text x="356" y="102" font-size="9.5" fill="#64748b" text-anchor="start">First frontier model</text>
+  <text x="356" y="114" font-size="9.5" fill="#64748b" text-anchor="start">trained entirely on</text>
+  <text x="356" y="126" font-size="9.5" fill="#64748b" text-anchor="start">Huawei Ascend chips</text>
+
+  <!-- 4. Apr 20, 2026: Kimi K2.6 (x=475, above) -->
+  <line x1="475" y1="212" x2="475" y2="58" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="475" y1="58" x2="488" y2="58" stroke="#cbd5e1" stroke-width="1"/>
+  <circle cx="475" cy="220" r="8" fill="#dc2626"/>
+  <text x="490" y="46" font-size="11" font-weight="600" fill="#1e293b" text-anchor="start">Kimi K2.6</text>
+  <text x="490" y="60" font-size="9.5" fill="#64748b" text-anchor="start">Open agentic leader,</text>
+  <text x="490" y="72" font-size="9.5" fill="#64748b" text-anchor="start">300-subagent swarm</text>
+
+  <!-- 5. Jun 4, 2026: Nemotron 3 Ultra (x=560, above) -->
+  <line x1="560" y1="212" x2="560" y2="100" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="560" y1="100" x2="576" y2="100" stroke="#cbd5e1" stroke-width="1"/>
+  <circle cx="560" cy="220" r="8" fill="#2563eb"/>
+  <text x="578" y="82" font-size="11" font-weight="600" fill="#1e293b" text-anchor="start">Nemotron 3 Ultra</text>
+  <text x="578" y="96" font-size="9.5" fill="#64748b" text-anchor="start">Nvidia enters, scores</text>
+  <text x="578" y="108" font-size="9.5" fill="#64748b" text-anchor="start">48 on AA index</text>
+
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- BELOW-LINE EVENTS -->
+  <!-- ═══════════════════════════════════════════════ -->
+
+  <!-- 6. Summer 2025: Chinese models top leaderboards (x=240, below) -->
+  <line x1="240" y1="228" x2="240" y2="290" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="240" y1="290" x2="148" y2="290" stroke="#cbd5e1" stroke-width="1"/>
+  <circle cx="240" cy="220" r="8" fill="#dc2626"/>
+  <text x="146" y="300" font-size="11" font-weight="600" fill="#1e293b" text-anchor="start">Chinese models top</text>
+  <text x="146" y="314" font-size="11" font-weight="600" fill="#1e293b" text-anchor="start">open leaderboards</text>
+  <text x="146" y="330" font-size="9.5" fill="#64748b" text-anchor="start">US open models fall</text>
+  <text x="146" y="343" font-size="9.5" fill="#64748b" text-anchor="start">behind on public rankings</text>
+
+  <!-- 7. Jan 2026: MiniMax IPO (x=400, below) -->
+  <line x1="400" y1="228" x2="400" y2="295" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="400" y1="295" x2="310" y2="295" stroke="#cbd5e1" stroke-width="1"/>
+  <circle cx="400" cy="220" r="8" fill="#16a34a"/>
+  <text x="308" y="282" font-size="11" font-weight="600" fill="#1e293b" text-anchor="start">MiniMax IPO</text>
+  <text x="308" y="296" font-size="9.5" fill="#64748b" text-anchor="start">Stock doubles on</text>
+  <text x="308" y="308" font-size="9.5" fill="#64748b" text-anchor="start">debut day in Hong Kong</text>
+
+  <!-- 8. Apr 23, 2026: White House memo (x=480, below) -->
+  <line x1="480" y1="228" x2="480" y2="325" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="480" y1="325" x2="420" y2="325" stroke="#cbd5e1" stroke-width="1"/>
+  <circle cx="480" cy="220" r="8" fill="#f59e0b"/>
+  <text x="418" y="315" font-size="11" font-weight="600" fill="#1e293b" text-anchor="start">White House memo</text>
+  <text x="418" y="329" font-size="9.5" fill="#64748b" text-anchor="start">Kratsios memo:</text>
+  <text x="418" y="342" font-size="9.5" fill="#64748b" text-anchor="start">'industrial-scale</text>
+  <text x="418" y="355" font-size="9.5" fill="#64748b" text-anchor="start">distillation'</text>
+
+  <!-- 9. Apr 29, 2026: House investigation (x=492, below) -->
+  <!-- nudge dot slightly so it doesn't collide with #8 -->
+  <line x1="503" y1="228" x2="503" y2="380" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="503" y1="380" x2="560" y2="380" stroke="#cbd5e1" stroke-width="1"/>
+  <circle cx="503" cy="220" r="8" fill="#f59e0b"/>
+  <text x="562" y="370" font-size="11" font-weight="600" fill="#1e293b" text-anchor="start">House investigation</text>
+  <text x="562" y="384" font-size="9.5" fill="#64748b" text-anchor="start">Moonshot, MiniMax,</text>
+  <text x="562" y="397" font-size="9.5" fill="#64748b" text-anchor="start">Alibaba, DeepSeek</text>
+  <text x="562" y="410" font-size="9.5" fill="#64748b" text-anchor="start">investigated</text>
+
+  <!-- 10. Late 2026 projected: Funding pressure (x=720, below) -->
+  <line x1="720" y1="228" x2="720" y2="310" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="720" y1="310" x2="640" y2="310" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4,3"/>
+  <!-- dashed circle -->
+  <circle cx="720" cy="220" r="8" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,3"/>
+  <circle cx="720" cy="220" r="4" fill="#94a3b8"/>
+  <text x="638" y="300" font-size="11" font-weight="600" fill="#94a3b8" text-anchor="start">Funding pressure?</text>
+  <text x="638" y="314" font-size="9.5" fill="#94a3b8" text-anchor="start">Lambert: Chinese labs</text>
+  <text x="638" y="327" font-size="9.5" fill="#94a3b8" text-anchor="start">may hit funding trouble</text>
+
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- LEGEND -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <g transform="translate(60, 425)">
+    <circle cx="8" cy="6" r="6" fill="#dc2626"/>
+    <text x="18" y="10" font-size="10" fill="#64748b">Chinese model</text>
+
+    <circle cx="118" cy="6" r="6" fill="#2563eb"/>
+    <text x="128" y="10" font-size="10" fill="#64748b">US model</text>
+
+    <circle cx="208" cy="6" r="6" fill="#f59e0b"/>
+    <text x="218" y="10" font-size="10" fill="#64748b">Regulatory</text>
+
+    <circle cx="300" cy="6" r="6" fill="#16a34a"/>
+    <text x="310" y="10" font-size="10" fill="#64748b">Financial</text>
+
+    <circle cx="378" cy="6" r="6" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="3,2"/>
+    <circle cx="378" cy="6" r="3" fill="#94a3b8"/>
+    <text x="388" y="10" font-size="10" fill="#94a3b8">Projected</text>
+  </g>
+
+  <!-- Source note -->
+  <text x="400" y="448" text-anchor="middle" font-size="9" fill="#94a3b8">Sources: lab announcements, Artificial Analysis, SCMP, Reuters, House Committee on Oversight</text>
+
+</svg>
