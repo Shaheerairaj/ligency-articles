@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagram Preview — The Open Model Playbook</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f1f5f9; margin: 0; padding: 40px 20px; }
+  .wrap { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 700; color: #1e293b; margin: 0 0 8px; }
+  p.sub { color: #64748b; font-size: 13px; margin: 0 0 40px; }
+  .diagram { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 40px; overflow: hidden; }
+  .diagram-label { font-size: 12px; font-weight: 600; color: #94a3b8; letter-spacing: 0.06em; text-transform: uppercase; padding: 14px 20px 0; }
+  .diagram svg, .diagram img { display: block; width: 100%; height: auto; }
+  .diagram table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .diagram table th { background: #1e293b; color: #f8fafc; font-weight: 600; padding: 10px 14px; text-align: left; }
+  .diagram table td { padding: 9px 14px; border-bottom: 1px solid #f1f5f9; color: #374151; vertical-align: top; }
+  .diagram table tr:last-child td { border-bottom: none; }
+  .diagram table tr:nth-child(even) td { background: #f8fafc; }
+  .diagram table td:first-child { font-weight: 600; color: #1e293b; }
+  .diagram .table-wrap { padding: 0 0 16px; }
+  .diagram .table-note { font-size: 11px; color: #94a3b8; padding: 0 20px 16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>The Open Model Playbook — Diagram Preview</h1>
+<p class="sub">All 10 custom diagrams. SVGs scale to container width.</p>
+
+<div class="diagram">
+  <div class="diagram-label">01 — AA Intelligence Index gap over time</div>
+  <img src="diagram-01-aa-index.svg">
+</div>
+
+<div class="diagram">
+  <div class="diagram-label">02 — Hallucination rates</div>
+  <img src="diagram-02-hallucination.svg">
+</div>
+
+<div class="diagram">
+  <div class="diagram-label">03 — API pricing (log scale)</div>
+  <img src="diagram-03-pricing.svg">
+</div>
+
+<div class="diagram">
+  <div class="diagram-label">05 — Lab comparison table</div>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Lab</th><th>Model</th><th>Released</th><th>Parameters</th><th>License</th><th>AA Score</th><th>Known for</th></tr></thead>
+    <tbody>
+      <tr><td>DeepSeek</td><td>V4 Pro</td><td>Apr 2026</td><td>1.6T total (MoE)</td><td>MIT</td><td>52</td><td>Cheapest API — $3.48 / $0.28 Flash</td></tr>
+      <tr><td>Moonshot</td><td>Kimi K2.6</td><td>Apr 20, 2026</td><td>1T / 32B active (MoE)</td><td>Mod. MIT</td><td>54</td><td>Agentic coding, 300-subagent swarm</td></tr>
+      <tr><td>Alibaba</td><td>Qwen3.7</td><td>2026</td><td>Various (dense + MoE)</td><td>Mixed (Max closed)</td><td>—</td><td>Widest ecosystem, 113K+ derivatives</td></tr>
+      <tr><td>Zhipu</td><td>GLM-5</td><td>Feb 11, 2026</td><td>744B / 40B active (MoE)</td><td>—</td><td>51</td><td>Trained on Ascend end-to-end</td></tr>
+      <tr><td>Xiaomi</td><td>MiMo-V2.5-Pro</td><td>2026</td><td>—</td><td>—</td><td>54</td><td>Tied for open leader</td></tr>
+      <tr><td>MiniMax</td><td>M3</td><td>2026</td><td>—</td><td>—</td><td>unverified*</td><td>HK IPO Jan 2026, stock doubled day one</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="table-note">AA Score = Artificial Analysis Intelligence Index as of June 2026. *MiniMax M3 score is self-reported; independent verification pending.</p>
+</div>
+
+<div class="diagram">
+  <div class="diagram-label">06 — Dense vs sparse attention</div>
+  <img src="diagram-06-sparse-attention.svg">
+</div>
+
+<div class="diagram">
+  <div class="diagram-label">08 — Chip supply: training vs inference</div>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th></th><th>Training new models</th><th>Running finished models</th></tr></thead>
+    <tbody>
+      <tr><td>Status</td><td>Still Nvidia-dependent</td><td>Ascend making progress</td></tr>
+      <tr><td>Key hardware</td><td>Nvidia Blackwell GPUs (required)</td><td>Huawei Ascend chips</td></tr>
+      <tr><td>Evidence</td><td>US officials say V4 was trained on smuggled Blackwell chips</td><td>GLM-5: first frontier model trained start-to-finish on domestic silicon</td></tr>
+      <tr><td>DeepSeek V4</td><td>Admits it can't serve V4-Pro at scale — not enough hardware</td><td>73% inference compute reduction on Ascend (claimed)</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div class="diagram">
+  <div class="diagram-label">09 — Price vs capability scatter</div>
+  <img src="diagram-09-scatter.svg">
+</div>
+
+<div class="diagram">
+  <div class="diagram-label">10 — Decision tree: which model to use</div>
+  <img src="diagram-10-decision-tree.svg">
+</div>
+
+<div class="diagram">
+  <div class="diagram-label">11 — US vs Chinese vs closed scores</div>
+  <img src="diagram-11-us-china-scores.svg">
+</div>
+
+<div class="diagram">
+  <div class="diagram-label">12 — Timeline of key events</div>
+  <img src="diagram-12-timeline.svg">
+</div>
+
+</div>
+</body>
+</html>
